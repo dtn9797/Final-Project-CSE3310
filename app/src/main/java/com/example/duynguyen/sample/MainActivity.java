@@ -1,8 +1,10 @@
 package com.example.duynguyen.sample;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
@@ -16,7 +18,11 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
+
 public class MainActivity extends AppCompatActivity {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    ImageView myImageView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageView myImageView = (ImageView) findViewById(R.id.imgview);
+                myImageView = (ImageView) findViewById(R.id.imgview);
                 Bitmap myBitmap = BitmapFactory.decodeResource(
                         getApplicationContext().getResources(),
                         R.drawable.puppy);
@@ -51,10 +57,29 @@ public class MainActivity extends AppCompatActivity {
                 //Decode the barcode
                 Barcode thisCode = barcodes.valueAt(0);
                 txtView.setText(thisCode.rawValue);
+
+                //Take pic
+                dispatchTakePictureIntent();
             }
         });
 
 
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            myImageView.setImageBitmap(imageBitmap);
+        }
     }
 
     @Override
