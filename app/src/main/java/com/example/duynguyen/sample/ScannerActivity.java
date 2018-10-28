@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.duynguyen.sample.utils.CodeValidation;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -39,9 +40,18 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
 
     @Override
     public void handleResult(Result result) {
+        //Show result for debugging
         Toast.makeText(this, "Contents = " + result.getText() +
                 ", Format = " + result.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 
+        //temporary use below portion (47->51). Description: validate class/student id.
+        if (CodeInputActivity.userType.equals(CodeInputActivity.PARENT_USER)) {
+            CodeValidation.checkStudentId(result.getText(), CodeInputActivity.mDatabase, getBaseContext());
+        } else if (CodeInputActivity.userType.equals(CodeInputActivity.STUDENT_USER)) {
+            CodeValidation.checkClassId(result.getText(), CodeInputActivity.mDatabase, getBaseContext());
+        }
+
+        //call scanner activity again
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
