@@ -1,0 +1,75 @@
+<!--<Co xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:orientation="vertical">-->
+
+<!--<EditText--><!--android:id="@+id/txtContent"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--text--><!--android:text="" />-->
+
+<!--<Button--><!--android:id="@+id/process_btn"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="Process" />-->
+
+<!--<ImageView--><!--android:id="@+id/imgview"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content" />--><!--</Co>-->
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/enter_code_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/enter_code"
+        app:layout_constraintStart_toStartOf="@+id/enter_code_et"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/enter_code_et"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:autofillHints="mystudent12345"
+        android:hint="@string/code"
+        android:inputType="text"
+        android:labelFor="@id/enter_code_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_code_tv" />
+
+    <Button
+        android:id="@+id/enter_code_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/enter_code_et"
+        app:layout_constraintTop_toBottomOf="@+id/enter_code_et" />
+
+    <TextView
+        android:id="@+id/or_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="@string/or"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_code_btn" />
+
+    <Button
+        android:id="@+id/scan_code_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/scan_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/or_tv" />
+</android.support.constraint.ConstraintLayout>
