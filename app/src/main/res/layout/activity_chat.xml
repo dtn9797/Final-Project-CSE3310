@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circleImageView"
+                android:id="@+id/profile_Iv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
@@ -32,6 +32,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/profile_Tv"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
@@ -42,15 +43,15 @@
                 android:text="Lorretta The Flemingdasdadf"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                app:layout_constraintBottom_toBottomOf="@+id/profile_Iv"
+                app:layout_constraintStart_toEndOf="@+id/profile_Iv"
                 app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/chat_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

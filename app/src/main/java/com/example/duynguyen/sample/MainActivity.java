@@ -1,5 +1,6 @@
 package com.example.duynguyen.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -41,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 readDatabase("test");
+            }
+        });
+
+        Button chatBtn = findViewById(R.id.chat_btn);
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(),ChatActivity.class);
+                startActivity(intent);
             }
         });
 
