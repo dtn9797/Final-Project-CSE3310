@@ -10,13 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.duynguyen.sample.Model.FriendlyMessage;
 import com.example.duynguyen.sample.utils.ChatAdapter;
-import com.example.duynguyen.sample.utils.MessageVH;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,8 +24,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ChatActivity extends AppCompatActivity {
-    public String USER_TYPE = "teacher";
     public String MESSAGES_CHILD = "messages";
+    public String ANNOUNCEMENT_CHANNEL_CHILD = "announcement";
+    public String PRIVATE_CHANNEL_CHILD = "privates";
+
+    public String mUserType = "teacher";
+    public String mParentId ;
+    public String mTeacherId;
 
     private DatabaseReference mDatabase;
     private ChatAdapter mFirebaseAdapter;
@@ -67,12 +69,12 @@ public class ChatActivity extends AppCompatActivity {
             }
         };
 
-        DatabaseReference messagesRef = mDatabase.child(MESSAGES_CHILD);
+        DatabaseReference messagesRef = mDatabase.child(MESSAGES_CHILD).child(ANNOUNCEMENT_CHANNEL_CHILD);
         FirebaseRecyclerOptions<FriendlyMessage> options =
                 new FirebaseRecyclerOptions.Builder<FriendlyMessage>()
                         .setQuery(messagesRef, parser)
                         .build();
-        mFirebaseAdapter = new ChatAdapter(options);
+        mFirebaseAdapter = new ChatAdapter(options, mUserType);
         chatRv.setAdapter(mFirebaseAdapter);
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -97,16 +99,20 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        //Need to set up profile tv and iv
+//        Need to set up profile tv and iv
+        if (mUserType.equals("parent")){
+            sendBtn.setEnabled(false);
+        }
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FriendlyMessage friendlyMessage = new
                         FriendlyMessage(messageEt.getText().toString(),
-                        "teacher",
+                        "userName",
+                        mUserType,
                         null,
                         null /* no image */);
-                mDatabase.child(MESSAGES_CHILD)
+                mDatabase.child(MESSAGES_CHILD).child(ANNOUNCEMENT_CHANNEL_CHILD)
                         .push().setValue(friendlyMessage);
                 messageEt.setText("");
             }

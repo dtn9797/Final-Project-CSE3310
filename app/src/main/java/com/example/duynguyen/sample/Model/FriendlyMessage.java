@@ -20,17 +20,27 @@ public class FriendlyMessage {
     private String id;
     private String text;
     private String name;
+    private String userType;
     private String photoUrl;
     private String imageUrl;
 
     public FriendlyMessage() {
     }
 
-    public FriendlyMessage(String text, String name, String photoUrl, String imageUrl) {
+    public FriendlyMessage(String text, String name, String userType, String photoUrl, String imageUrl) {
         this.text = text;
         this.name = name;
+        this.userType = userType;
         this.photoUrl = photoUrl;
         this.imageUrl = imageUrl;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public String getId() {
