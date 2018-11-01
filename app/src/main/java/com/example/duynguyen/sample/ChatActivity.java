@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -93,6 +94,21 @@ public class ChatActivity extends AppCompatActivity {
                                 lastVisiblePosition == (positionStart - 1))) {
                     chatRv.scrollToPosition(positionStart);
                 }
+            }
+        });
+
+        //Need to set up profile tv and iv
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FriendlyMessage friendlyMessage = new
+                        FriendlyMessage(messageEt.getText().toString(),
+                        "teacher",
+                        null,
+                        null /* no image */);
+                mDatabase.child(MESSAGES_CHILD)
+                        .push().setValue(friendlyMessage);
+                messageEt.setText("");
             }
         });
     }
