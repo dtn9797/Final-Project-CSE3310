@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:text="Read data from the database"/>
     <Button
-        android:id="@+id/chat_btn"
+        android:id="@+id/announcement_chat_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to chat activity"/>
+        android:text="Announcement"/>
 </LinearLayout>

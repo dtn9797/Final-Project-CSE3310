@@ -28,11 +28,14 @@ public class ChatActivity extends AppCompatActivity {
     public String ANNOUNCEMENT_CHANNEL_CHILD = "announcement";
     public String PRIVATE_CHANNEL_CHILD = "privates";
 
+    //these below variables are for setting private/ announcement chat room w/ teacher & user id
     public String mUserType = "teacher";
-    public String mParentId ;
-    public String mTeacherId;
+    public boolean mAnnouncChannel = false;
+    public String mClassId = "myStudent12325";
+    public String mParentId = "parentid2";
+    public String mTeacherId = "teacherid0";
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mClassDatabase;
     private ChatAdapter mFirebaseAdapter;
 
     @BindView(R.id.profile_Iv)
@@ -56,7 +59,10 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void setUpView() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mClassDatabase = FirebaseDatabase.getInstance().getReference();
+        final String messPath = ((mAnnouncChannel)?MESSAGES_CHILD+"/"+mClassId+"/"+ANNOUNCEMENT_CHANNEL_CHILD
+                                                :MESSAGES_CHILD+"/"+mClassId+"/"+(mTeacherId+"+"+mParentId));
+
         SnapshotParser<FriendlyMessage> parser = new SnapshotParser<FriendlyMessage>(){
             @NonNull
             @Override
@@ -69,7 +75,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         };
 
-        DatabaseReference messagesRef = mDatabase.child(MESSAGES_CHILD).child(ANNOUNCEMENT_CHANNEL_CHILD);
+        DatabaseReference messagesRef = mClassDatabase.child(messPath);
         FirebaseRecyclerOptions<FriendlyMessage> options =
                 new FirebaseRecyclerOptions.Builder<FriendlyMessage>()
                         .setQuery(messagesRef, parser)
@@ -100,7 +106,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 //        Need to set up profile tv and iv
-        if (mUserType.equals("parent")){
+        if (mUserType.equals("parent")&&mAnnouncChannel){
             sendBtn.setEnabled(false);
         }
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +118,7 @@ public class ChatActivity extends AppCompatActivity {
                         mUserType,
                         null,
                         null /* no image */);
-                mDatabase.child(MESSAGES_CHILD).child(ANNOUNCEMENT_CHANNEL_CHILD)
+                mClassDatabase.child(messPath)
                         .push().setValue(friendlyMessage);
                 messageEt.setText("");
             }
