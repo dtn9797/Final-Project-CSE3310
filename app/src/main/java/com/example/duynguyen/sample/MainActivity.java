@@ -55,6 +55,16 @@ public class MainActivity extends AppCompatActivity {
            }
        });
 
+       // edit users
+        Button editBtn = (Button) findViewById(R.id.edit_btn);
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), EditUsers.class);
+                startActivity(intent);
+            }
+        });
+
 
 
     }
