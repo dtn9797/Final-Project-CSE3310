@@ -20,8 +20,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 public class ChatActivity extends AppCompatActivity {
     public String MESSAGES_CHILD = "messages";
@@ -30,12 +33,12 @@ public class ChatActivity extends AppCompatActivity {
 
     //these below variables are for setting private/ announcement chat room w/ teacher & user id
     public String mUserType = "teacher";
-    public boolean mAnnouncChannel = false;
+    public boolean mAnnouncChannel = true;
     public String mClassId = "myStudent12325";
     public String mParentId = "parentid2";
     public String mTeacherId = "teacherid0";
 
-    private DatabaseReference mClassDatabase;
+    private DatabaseReference mClassDatabase,mNotificationRef;
     private ChatAdapter mFirebaseAdapter;
 
     @BindView(R.id.profile_Iv)
@@ -60,6 +63,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private void setUpView() {
         mClassDatabase = FirebaseDatabase.getInstance().getReference();
+        mNotificationRef = mClassDatabase.child("notifications");
+
         final String messPath = ((mAnnouncChannel)?MESSAGES_CHILD+"/"+mClassId+"/"+ANNOUNCEMENT_CHANNEL_CHILD
                                                 :MESSAGES_CHILD+"/"+mClassId+"/"+(mTeacherId+"+"+mParentId));
 
@@ -120,6 +125,13 @@ public class ChatActivity extends AppCompatActivity {
                         null /* no image */);
                 mClassDatabase.child(messPath)
                         .push().setValue(friendlyMessage);
+
+                //need to change it later
+                HashMap<String, String> notMap = new HashMap<>();
+                notMap.put("from",mTeacherId);
+                notMap.put("type","announcment");
+                mNotificationRef.child(mClassId).push().setValue(notMap);
+
                 messageEt.setText("");
             }
         });
