@@ -108,6 +108,35 @@
         android:ems="10"
         android:hint="@string/phone"
         android:inputType="phone" />
+    <TextView
+        android:id="@+id/tv_student"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/student"/>
+
+    <EditText
+        android:id="@+id/et_student"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="student's email"
+        android:inputType="textPersonName" />
+    <TextView
+        android:id="@+id/tv_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="@string/parent"/>
+
+    <EditText
+        android:id="@+id/et_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="parent's email"
+        android:inputType="textPersonName" />
+
 
     <Button
         android:id="@+id/add_btn"

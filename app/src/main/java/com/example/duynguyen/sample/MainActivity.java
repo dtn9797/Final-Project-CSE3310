@@ -65,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
 
@@ -89,5 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
         mDatabase.child(child).setValue(text);
     }
+
 
 }

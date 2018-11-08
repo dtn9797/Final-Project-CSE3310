@@ -1,4 +1,5 @@
 package com.example.duynguyen.sample;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -6,7 +7,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.example.duynguyen.sample.model.Users;
 import com.google.firebase.database.DatabaseReference;
@@ -14,12 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class EditUsers extends AppCompatActivity {
     private DatabaseReference mDatabase;
-    private TextView textViewFname;
-    private TextView textViewLname;
-    private TextView textViewEmail;
-    private TextView textViewPassword;
-    private TextView textViewPhone;
-    private String type, fname, lname, password, email, phone;
+    private String type, fname, lname, password, email, phone, student, parent;
     private RadioGroup radGroup;
     private RadioButton rBtn;
 
@@ -40,6 +35,8 @@ public class EditUsers extends AppCompatActivity {
         final EditText etPassword = findViewById(R.id.et_password);
         final EditText etEmail = findViewById(R.id.et_email);
         final EditText etPhone = findViewById(R.id.et_phone);
+        final EditText etStudent = findViewById(R.id.et_student);
+        final EditText etParent = findViewById(R.id.et_parent);
 
         // Add user button
         Button addBtn = (Button) findViewById(R.id.add_btn);
@@ -47,20 +44,40 @@ public class EditUsers extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int selected = radGroup.getCheckedRadioButtonId();
-                switch(selected){
-                    case 0: type = "teacher"; break;
-                    case 1: type = "parent"; break;
-                    case 2: type = "student"; break;
-                }
+                rBtn = (RadioButton) findViewById(selected);
+                type = rBtn.getText().toString();
                 fname = etFname.getText().toString();
                 lname = etLname.getText().toString();
                 password = etPassword.getText().toString();
                 email = etEmail.getText().toString();
                 phone = etPhone.getText().toString();
-                Users user = new Users(type, fname,lname,password,email,phone);
+                parent = etParent.getText().toString();
+                student = etStudent.getText().toString();
 
-                DatabaseReference userRef = mDatabase.child("Users");
-                userRef.setValue(user);
+                if(type.equals("Parent")){
+                    student = etStudent.getText().toString();
+                    DatabaseReference parentRef = mDatabase.child("Users/Parents/"+lname);
+                    DatabaseReference pushedRef = parentRef.push();
+                    String key = pushedRef.getKey();
+                    Users user = new Users(type, key, fname,lname,password,email,phone,student,null);
+                    pushedRef.setValue(user);
+                }
+                else if(type.equals("Student")){
+                    parent = etParent.getText().toString();
+                    DatabaseReference studentRef = mDatabase.child("Users/Students/"+lname);
+                    DatabaseReference pushedRef = studentRef.push();
+                    String key = pushedRef.getKey();
+                    Users user = new Users(type, key, fname, lname, password, email, phone, null, parent);
+                    pushedRef.setValue(user);
+                }else if(type.equals("Teacher")){
+                    DatabaseReference teacherRef = mDatabase.child("Users/Teacher/"+lname);
+                    DatabaseReference pushedRef = teacherRef.push();
+                    String key = pushedRef.getKey();
+                    Users user = new Users(type, key, fname, lname, password, email, phone, null, null);
+                    pushedRef.setValue(user);
+                }
+
+                
             }
         });
     }
