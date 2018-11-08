@@ -4,8 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--required camera for a device-->
-    <uses-feature android:name="android.hardware.camera"
+    <!-- required camera for a device -->
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
 
     <application
@@ -25,8 +26,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailedActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".Evaluate"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".EditUsers"
+            android:label="@string/title_activity_edit_users"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

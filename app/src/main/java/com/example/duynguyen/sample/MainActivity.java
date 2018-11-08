@@ -1,5 +1,6 @@
 package com.example.duynguyen.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -43,6 +44,28 @@ public class MainActivity extends AppCompatActivity {
                 readDatabase("test");
             }
         });
+
+        // evaluation button
+       Button evalBtn = (Button) findViewById(R.id.eval_btn);
+       evalBtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(getBaseContext(), Evaluate.class);
+               startActivity(intent);
+           }
+       });
+
+       // edit users
+        Button editBtn = (Button) findViewById(R.id.edit_btn);
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), EditUsers.class);
+                startActivity(intent);
+            }
+        });
+
+
 
     }
 
