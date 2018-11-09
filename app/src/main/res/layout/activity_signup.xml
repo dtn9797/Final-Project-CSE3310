@@ -22,7 +22,7 @@
         android:orientation="horizontal"
         >
         <RadioButton
-            android:id="@+id/radioBtn0"
+            android:id="@+id/teacherRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,7 +31,7 @@
             />
 
         <RadioButton
-            android:id="@+id/radioBtn1"
+            android:id="@+id/parentRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -39,7 +39,7 @@
             android:text="@string/parent" />
 
         <RadioButton
-            android:id="@+id/radioBtn2"
+            android:id="@+id/studentRadioBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -102,8 +102,7 @@
         android:singleLine="true"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:textSize="16sp"
-        android:text="d@gmail.com"/>
+        android:textSize="16sp" />
 
     <View
         android:layout_width="fill_parent"

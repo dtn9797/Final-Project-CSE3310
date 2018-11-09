@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.duynguyen.sample.utils.CustomToast;
 import com.example.duynguyen.sample.utils.Utils;
 
+import java.security.spec.ECPoint;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,12 +30,8 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
     private static TextView login;
     private static Button nextBtn;
     private RadioGroup radUserTypeRG;
-    private RadioButton rBtn;
+    private RadioButton studentRBtn,parentRBtn,teacherRBtn,rBtn;
 
-    //Hard-coded string
-    private static String userType= "teacher";
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
@@ -52,9 +49,15 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
     private void setListeners() {
         nextBtn.setOnClickListener(this);
         login.setOnClickListener(this);
+        parentRBtn.setOnClickListener(this);
+        teacherRBtn.setOnClickListener(this);
+        studentRBtn.setOnClickListener(this);
     }
 
     private void initViews() {
+        studentRBtn =findViewById(R.id.studentRadioBtn);
+        parentRBtn=findViewById(R.id.parentRadioBtn);
+        teacherRBtn =findViewById(R.id.teacherRadioBtn);
         radUserTypeRG = findViewById(R.id.user_type_RG);
         firstNameEt = (EditText) findViewById(R.id.first_name_edt);
         userIdEt = (EditText) findViewById(R.id.userEmailId);
@@ -87,9 +90,8 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
         String getPassword = passwordEt.getText().toString();
         String getConfirmPassword = confirmPasswordEt.getText().toString();
 
-
         // Pattern match for email id
-        Pattern p = Pattern.compile(Utils.regEx);
+        Pattern p = Pattern.compile(Utils.emailRegEx);
         Matcher m = p.matcher(getUserId);
 
         if (radUserTypeRG.getCheckedRadioButtonId() != -1){
@@ -112,7 +114,8 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
                     "All fields are required.");
         }
 
-            // Check if email id valid or not
+
+        // Check if email id valid or not
         else if (!m.find())
             new CustomToast().Show_Toast(getApplicationContext(), view,
                     "Your User Id is Invalid.");
@@ -134,7 +137,10 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        int id = v.getId();
+        int id2 =  R.id.parentRadioBtn;
         switch (v.getId()) {
+
             case R.id.next_btn:
 
                 // Call checkValidation method
@@ -145,6 +151,15 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
 
                 // Replace login fragment
 
+                break;
+            case R.id.parentRadioBtn:
+                userIdEt.setHint("Email Id");
+                break;
+            case R.id.studentRadioBtn:
+                userIdEt.setHint("User Id");
+                break;
+            case R.id.teacherRadioBtn:
+                userIdEt.setHint("Email Id");
                 break;
         }
 
