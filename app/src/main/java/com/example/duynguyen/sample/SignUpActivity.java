@@ -16,18 +16,22 @@ import android.widget.Toast;
 
 import com.example.duynguyen.sample.utils.CustomToast;
 import com.example.duynguyen.sample.utils.Utils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUpActivity  extends AppCompatActivity implements View.OnClickListener {
     private static View view;
-    private static EditText fullName, emailId, mobileNumber, address,
+    private static EditText fullName, emailId, userId, mobileNumber,
             password, confirmPassword;
     private static TextView login;
     private static Button signUpButton;
     private static CheckBox terms_conditions;
 
+    private DatabaseReference mRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
 
         initViews();
         setListeners();
+        mRef = FirebaseDatabase.getInstance().getReference();
 
     }
 
@@ -51,8 +56,8 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
     private void initViews() {
         fullName = (EditText) findViewById(R.id.fullName);
         emailId = (EditText) findViewById(R.id.userEmailId);
+        userId = (EditText) findViewById(R.id.userId);
         mobileNumber = (EditText) findViewById(R.id.mobileNumber);
-        address = (EditText) findViewById(R.id.address);
         password = (EditText) findViewById(R.id.password);
         confirmPassword = (EditText) findViewById(R.id.confirmPassword);
         signUpButton = (Button) findViewById(R.id.signUpBtn);
@@ -77,9 +82,9 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
         String getFullName = fullName.getText().toString();
         String getEmailId = emailId.getText().toString();
         String getMobileNumber = mobileNumber.getText().toString();
-        String getAddress = address.getText().toString();
         String getPassword = password.getText().toString();
         String getConfirmPassword = confirmPassword.getText().toString();
+        String getUserId = userId.getText().toString();
 
         // Pattern match for email id
         Pattern p = Pattern.compile(Utils.regEx);
@@ -89,7 +94,7 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
         if (getFullName.equals("") || getFullName.length() == 0
                 || getEmailId.equals("") || getEmailId.length() == 0
                 || getMobileNumber.equals("") || getMobileNumber.length() == 0
-                || getAddress.equals("") || getAddress.length() == 0
+                || getUserId.equals("") || getUserId.length() == 0
                 || getPassword.equals("") || getPassword.length() == 0
                 || getConfirmPassword.equals("")
                 || getConfirmPassword.length() == 0)

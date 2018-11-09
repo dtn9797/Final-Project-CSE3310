@@ -90,21 +90,6 @@
         android:layout_height="1px"
         android:background="@color/white_greyish" />
 
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/location"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:hint="@string/location"
-        android:inputType="textCapWords|textLongMessage"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/userId"
