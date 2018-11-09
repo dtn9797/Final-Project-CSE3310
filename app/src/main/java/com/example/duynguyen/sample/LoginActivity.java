@@ -110,10 +110,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.forgot_password:
+            case R.id.createAccount:
 
                 // Replace forgot password fragment with animation
-//                Intent forgotIntent = new Intent(this,)
+                Intent signUpIntent = new Intent(this, SignUpActivity.class);
+                startActivity(signUpIntent);
                 break;
         }
     }
