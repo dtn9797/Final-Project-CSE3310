@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.duynguyen.sample.utils.CodeValidation;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -22,6 +23,9 @@ import butterknife.ButterKnife;
 
 
 public class CodeInputActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+
     private static final int ZXING_CAMERA_PERMISSION = 1;
     @BindView(R.id.enter_code_btn)
     Button enterCodeBtn;
@@ -31,6 +35,7 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
     Button scanCodeBtn;
 
     //temporary place variables as static
+    private FirebaseAuth mAuth;
     public static DatabaseReference mDatabase;
     public static String userType = "parent";
     public static String PARENT_USER = "parent";
@@ -44,11 +49,10 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
         ButterKnife.bind(this);
 
         setUpView();
-
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     private void setUpView() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         enterCodeBtn.setOnClickListener(this);
         scanCodeBtn.setOnClickListener(this);

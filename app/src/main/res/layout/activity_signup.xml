@@ -9,26 +9,53 @@
     android:background="@color/colorPrimaryLight">
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/signUp"
-        android:textColor="@color/white_greyish"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:layout_margin="10dp"
+        android:text="User Type"/>
+    <RadioGroup
+        android:id="@+id/user_type_RG"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/radioBtn0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="@string/teacher"
+            />
 
+        <RadioButton
+            android:id="@+id/radioBtn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="@string/parent" />
 
+        <RadioButton
+            android:id="@+id/radioBtn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="@string/student" />
+    </RadioGroup>
     <EditText
-        android:id="@+id/fullName"
+        android:id="@+id/first_name_edt"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/user"
+
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
-        android:hint="@string/fullName"
+        android:hint="@string/firstName"
         android:inputType="textCapWords"
         android:padding="10dp"
         android:singleLine="true"
@@ -43,12 +70,30 @@
         android:background="@color/white_greyish" />
 
     <EditText
+        android:id="@+id/last_name_dt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/transparent"
+
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:hint="@string/lastName"
+        android:inputType="text"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:text="lastname"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="16sp" />
+
+    <EditText
         android:id="@+id/userEmailId"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/email"
+        android:drawableLeft="@drawable/user"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="@string/email"
@@ -95,24 +140,6 @@
 
 
     <EditText
-        android:id="@+id/userId"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/user"
-        android:drawablePadding="8dp"
-        android:gravity="center_vertical"
-        android:hint="@string/userid"
-        android:inputType="text"
-        android:padding="10dp"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="16sp"
-        android:text="teacher"/>
-
-    <EditText
         android:id="@+id/password"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -153,23 +180,14 @@
         android:textSize="16sp"
         android:text="paradise"/>
 
-    <CheckBox
-        android:id="@+id/terms_conditions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:text="@string/terms_conditions"
-        android:textColor="@color/white"
-        android:textSize="14sp" />
-
     <Button
-        android:id="@+id/signUpBtn"
+        android:id="@+id/next_btn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:background="@drawable/loginbutton_selector"
         android:padding="3dp"
-        android:text="@string/signUp"
+        android:text="@string/next"
         android:textColor="@color/colorPrimary"
         android:textSize="17sp"
         android:textStyle="bold" />

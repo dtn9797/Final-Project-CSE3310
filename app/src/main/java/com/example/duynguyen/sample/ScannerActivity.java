@@ -2,12 +2,21 @@ package com.example.duynguyen.sample;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.duynguyen.sample.model.Teacher;
 import com.example.duynguyen.sample.utils.CodeValidation;
+import com.example.duynguyen.sample.utils.CustomToast;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -60,4 +69,39 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
             }
         }, 2000);
     }
+
+//    public void createUser(String email, String password){
+//        mAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            // Sign in success, update UI with the signed-in user's information
+//                            Log.d(TAG, "createUserWithEmail:success");
+//                            FirebaseUser user = mAuth.getCurrentUser();
+////                            updateUI(user);
+//                            //go to scanner activity
+//                            String getFullName = fullName.getText().toString();
+//                            String getEmailId = userId.getText().toString();
+//                            String getMobileNumber = mobileNumber.getText().toString();
+//                            Teacher teacher = new Teacher(getFullName,getEmailId,classId,getMobileNumber);
+//                            DatabaseReference teacherUserRef = mRef.child("users").child(classId+"/"+userType).push();
+//                            String key = teacherUserRef.getKey();
+//                            teacher.setId(key);
+//                            teacherUserRef.setValue(teacher);
+//
+//                            Toast.makeText(getApplicationContext(), "Do SignUp.", Toast.LENGTH_SHORT)
+//                                    .show();
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+//                            new CustomToast().Show_Toast(getApplicationContext(), view,
+//                                    "Failed to register user(Internetion lost / duplicated user).");
+////                            updateUI(null);
+//                        }
+//
+//                        // ...
+//                    }
+//                });
+//    }
 }

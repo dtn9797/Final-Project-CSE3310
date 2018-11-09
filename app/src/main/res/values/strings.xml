@@ -26,4 +26,10 @@
     <string name="registered_emailid">Please enter your Registered Email Id below:</string>
     <string name="submit">SUBMIT</string>
     <string name="back">BACK</string>
+    <string name="teacher">teacher</string>
+    <string name="parent">parent</string>
+    <string name="student">student</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="next">Next</string>
 </resources>
