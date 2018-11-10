@@ -79,7 +79,7 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
                     new String[]{Manifest.permission.CAMERA}, ZXING_CAMERA_PERMISSION);
         } else {
             Intent intent = new Intent(this, ScannerActivity.class);
-            intent.putExtra(ScannerActivity.USER_EXTRA, mUser.getUserType());
+            intent.putExtra(ScannerActivity.USER_EXTRA, mUser);
             startActivity(intent);
         }
     }
@@ -101,9 +101,9 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
             case R.id.enter_code_btn:
                 if (mUser.getUserType().equals(Utils.PARENT)) {
                     //need to rewrite checkStudentId
-                    CodeValidation.checkStudentId(String.valueOf(enterCodeEt.getText()), mDatabase, getBaseContext());
+                    CodeValidation.checkStudentId(String.valueOf(enterCodeEt.getText()),mUser, getBaseContext());
                 } else if (mUser.getUserType().equals(Utils.STUDENT)) {
-                    CodeValidation.checkClassId(String.valueOf(enterCodeEt.getText()),mUser,mDatabase, getBaseContext());
+                    CodeValidation.checkClassId(String.valueOf(enterCodeEt.getText()),mUser, getBaseContext());
                 }
                 break;
             case R.id.scan_code_btn:

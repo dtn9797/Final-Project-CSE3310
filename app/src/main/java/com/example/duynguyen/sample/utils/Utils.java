@@ -6,6 +6,8 @@ public class Utils {
 	public static final String emailRegEx = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b";
 	//Username Validation pattern
 	public static final String userNameRegEx = "[a-zA-Z0-9._]";
+	//StudentKey
+    public static final String studentKeyRegEx = "myStudent[0-9]{5,5}[a-zA-Z0-9._]*";
 
 	//Fragments Tags
 	public static final String Login_Fragment = "Login_Fragment";
@@ -21,6 +23,7 @@ public class Utils {
     public static final String USERS_CHILD= "users";
     public static final String CLASSES_CHILD= "classes";
     public static final String STUDENTS_CHILD= "students";
+    public static final String PARENTS_CHILD= "parents";
 
 
 

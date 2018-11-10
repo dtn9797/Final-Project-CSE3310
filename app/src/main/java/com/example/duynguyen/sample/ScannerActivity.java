@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.CodeValidation;
 import com.example.duynguyen.sample.utils.Utils;
 import com.google.zxing.Result;
@@ -16,7 +17,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
-    private String mUserType;
+    private User mUser;
     public static String USER_EXTRA = "userEx";
 
     @Override
@@ -31,7 +32,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
                 closeOnError();
             }
 
-            mUserType = intent.getParcelableExtra(USER_EXTRA);
+            mUser = intent.getParcelableExtra(USER_EXTRA);
         }
 
 
@@ -66,10 +67,12 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
                 ", Format = " + result.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 
         //temporary use below portion (47->51). Description: validate class/student id.
-        if (mUserType.equals(Utils.PARENT)) {
-            CodeValidation.checkStudentId(result.getText(), CodeInputActivity.mDatabase, getBaseContext());
-        } else if (mUserType.equals(Utils.STUDENT)) {
+        if (mUser.getUserType().equals(Utils.PARENT)) {
+            CodeValidation.checkStudentId(String.valueOf(result.getText()),mUser, getBaseContext());
+//            CodeValidation.checkStudentId(result.getText(), CodeInputActivity.mDatabase, getBaseContext());
+        } else if (mUser.getUserType().equals(Utils.STUDENT)) {
 //            CodeValidation.checkClassId(result.getText(), CodeInputActivity.mDatabase, getBaseContext());
+            CodeValidation.checkStudentId(String.valueOf(result.getText()),mUser, getBaseContext());
         }
 
         //call scanner activity again
@@ -79,7 +82,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
             public void run() {
                 mScannerView.resumeCameraPreview(ScannerActivity.this);
             }
-        }, 2000);
+        }, 3000);
     }
 
 //    public void createUser(String email, String password){
