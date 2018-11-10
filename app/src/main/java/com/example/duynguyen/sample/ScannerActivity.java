@@ -2,21 +2,12 @@ package com.example.duynguyen.sample;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.duynguyen.sample.model.Teacher;
 import com.example.duynguyen.sample.utils.CodeValidation;
-import com.example.duynguyen.sample.utils.CustomToast;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;

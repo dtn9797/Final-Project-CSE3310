@@ -1,5 +1,6 @@
 package com.example.duynguyen.sample;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.duynguyen.sample.model.User;
+import com.example.duynguyen.sample.utils.CodeValidation;
 import com.example.duynguyen.sample.utils.CustomToast;
 import com.example.duynguyen.sample.utils.Utils;
 
@@ -86,13 +89,19 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
         String getFirstName = firstNameEt.getText().toString();
         String getLastName = lastNameEt.getText().toString();
         String getUserId = userIdEt.getText().toString();
+        String getUserIdHintText = userIdEt.getHint().toString();
         String getMobileNumber = mobileNumberEt.getText().toString();
         String getPassword = passwordEt.getText().toString();
         String getConfirmPassword = confirmPasswordEt.getText().toString();
 
         // Pattern match for email id
-        Pattern p = Pattern.compile(Utils.emailRegEx);
-        Matcher m = p.matcher(getUserId);
+        Pattern p0 = Pattern.compile(Utils.emailRegEx);
+        Matcher m0 = p0.matcher(getUserId);
+
+        // Pattern match for user id
+        Pattern p1 = Pattern.compile(Utils.userNameRegEx);
+        Matcher m1 = p1.matcher(getUserId);
+
 
         if (radUserTypeRG.getCheckedRadioButtonId() != -1){
             //get selected radio btn
@@ -115,10 +124,11 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
         }
 
 
-        // Check if email id valid or not
-        else if (!m.find())
+        // Check if email id, user Id valid or not
+        else if ((!m0.find()&& getUserIdHintText.equals("Email Id"))||
+                !m1.find()&& getUserIdHintText.equals("User Id"))
             new CustomToast().Show_Toast(getApplicationContext(), view,
-                    "Your User Id is Invalid.");
+                    "Your Id is Invalid.");
 
             // Check if both password should be equal
         else if (!getConfirmPassword.equals(getPassword))
@@ -127,7 +137,13 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
 
             // Else do signup or do your stuff
         else {
-            String a = "a";
+            //Go to CodeInputActivity if user type is parent/student
+            User user = new User(getUserType,getFirstName,getLastName,getMobileNumber,getUserId,getPassword);
+            if (getUserType.equals(Utils.PARENT)||getUserType.equals(Utils.TEACHER)){
+                Intent intent = new Intent(this,CodeInputActivity.class);
+                intent.putExtra(CodeInputActivity.USER_EXTRA,user);
+                startActivity(intent);
+            }
 
 
         }

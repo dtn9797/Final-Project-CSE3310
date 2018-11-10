@@ -12,8 +12,11 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.CodeValidation;
+import com.example.duynguyen.sample.utils.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,6 +28,7 @@ import butterknife.ButterKnife;
 public class CodeInputActivity extends AppCompatActivity implements View.OnClickListener {
 
 
+    public static String USER_EXTRA = "user_extra";
 
     private static final int ZXING_CAMERA_PERMISSION = 1;
     @BindView(R.id.enter_code_btn)
@@ -36,8 +40,8 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
 
     //temporary place variables as static
     private FirebaseAuth mAuth;
+    private User mUser;
     public static DatabaseReference mDatabase;
-    public static String userType = "parent";
     public static String PARENT_USER = "parent";
     public static String STUDENT_USER = "student";
 
@@ -48,6 +52,15 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_code_input);
         ButterKnife.bind(this);
 
+        if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            if (intent == null) {
+                closeOnError();
+            }
+
+            mUser = intent.getParcelableExtra(USER_EXTRA);
+
+        }
         setUpView();
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
@@ -68,6 +81,11 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
             startActivity(intent);
         }
     }
+    private void closeOnError() {
+        finish();
+        Toast.makeText(this, getString(R.string.close_on_intent_error), Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,9 +96,10 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.enter_code_btn:
-                if (userType.equals(PARENT_USER)) {
+                if (mUser.getUserType().equals(Utils.PARENT)) {
+                    //need to rewrite checkStudentId
                     CodeValidation.checkStudentId(String.valueOf(enterCodeEt.getText()), mDatabase, getBaseContext());
-                } else if (userType.equals(STUDENT_USER)) {
+                } else if (mUser.getUserType().equals(Utils.STUDENT)) {
                     CodeValidation.checkClassId(String.valueOf(enterCodeEt.getText()), mDatabase, getBaseContext());
                 }
                 break;

@@ -1,57 +1,37 @@
 package com.example.duynguyen.sample.model;
 
-public class User {
-    private String name;
-    private String email;
-    private String id;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class User implements Parcelable {
+    private String userType;
+    private String firstName;
+    private String lastName;
+    private String phoneNum;
+    private String loginId;
+    private String pass;
+    private String fUserId;
     private String classId;
-    private String type;
 
-    public User(String name, String email, String id, String classId,String type) {
-        this.name = name;
-        this.email = email;
-        this.id = id;
-        this.classId = classId;
-        this.type = type;
+    public User(String userType, String firstName, String lastName,String phoneNum, String loginId,String pass) {
+        this.userType = userType;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.loginId = loginId;
+        this.pass = pass;
+        this.phoneNum = phoneNum;
     }
 
-    public User(String name, String email, String classId, String type) {
-        this.name = name;
-        this.email = email;
-        this.classId = classId;
-        this.type = type;
+    public String getUserType() {
+        return userType;
     }
 
-    public String getType() {
-        return type;
+    public String getfUserId() {
+        return fUserId;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setfUserId(String fUserId) {
+        this.fUserId = fUserId;
     }
 
     public String getClassId() {
@@ -61,4 +41,44 @@ public class User {
     public void setClassId(String classId) {
         this.classId = classId;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.userType);
+        dest.writeString(this.firstName);
+        dest.writeString(this.lastName);
+        dest.writeString(this.phoneNum);
+        dest.writeString(this.loginId);
+        dest.writeString(this.pass);
+        dest.writeString(this.fUserId);
+        dest.writeString(this.classId);
+    }
+
+    protected User(Parcel in) {
+        this.userType = in.readString();
+        this.firstName = in.readString();
+        this.lastName = in.readString();
+        this.phoneNum = in.readString();
+        this.loginId = in.readString();
+        this.pass = in.readString();
+        this.fUserId = in.readString();
+        this.classId = in.readString();
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }
