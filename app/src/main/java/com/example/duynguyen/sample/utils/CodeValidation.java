@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.duynguyen.sample.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,17 +49,19 @@ public class CodeValidation {
 
     public static void checkStudentId(String id, DatabaseReference dataBase, final Context context) {
 
-        boolean formatChecker = Pattern.matches("mystudent[0-9]{6,10}$", id);
+        boolean formatChecker = Pattern.matches(Utils.userNameRegEx,id);
         if (formatChecker) {
-            final String classId = id.substring(9, 14);
-            final String studentId = id.substring(14,id.length());
+            final String studentId = id;
             //check if classId exists in the database
-            dataBase.child("classes").child(classId).child("students").addListenerForSingleValueEvent(new ValueEventListener() {
+            dataBase.child(Utils.USERS_CHILD).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.child(studentId).exists()) {
                         //Go to the main screen
                         Toast.makeText(context, "Data exits",Toast.LENGTH_SHORT).show();
+                        //Parent signUp sucessfully
+                        User student = dataSnapshot.child(studentId).getValue(User.class);
+
                     }
                     else {
                         Toast.makeText(context, "Error!!! Student id is not existed.",Toast.LENGTH_SHORT).show();

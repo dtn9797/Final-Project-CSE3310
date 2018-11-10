@@ -57,8 +57,9 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
             if (intent == null) {
                 closeOnError();
             }
-
-            mUser = intent.getParcelableExtra(USER_EXTRA);
+            else {
+                mUser = intent.getParcelableExtra(USER_EXTRA);
+            }
 
         }
         setUpView();
@@ -71,16 +72,18 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
         scanCodeBtn.setOnClickListener(this);
     }
 
-    public void launchActivity(Class<?> clss) {
+    public void launchScannerActivity() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CAMERA}, ZXING_CAMERA_PERMISSION);
         } else {
-            Intent intent = new Intent(this, clss);
+            Intent intent = new Intent(this, ScannerActivity.class);
+            intent.putExtra(ScannerActivity.USER_EXTRA, mUser.getUserType());
             startActivity(intent);
         }
     }
+
     private void closeOnError() {
         finish();
         Toast.makeText(this, getString(R.string.close_on_intent_error), Toast.LENGTH_SHORT).show();
@@ -104,7 +107,7 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
                 }
                 break;
             case R.id.scan_code_btn:
-                launchActivity(ScannerActivity.class);
+                launchScannerActivity();
                 break;
         }
     }

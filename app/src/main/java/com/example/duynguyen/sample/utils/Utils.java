@@ -17,6 +17,9 @@ public class Utils {
     public static final String TEACHER= "teacher";
     public static final String STUDENT= "student";
 
+    //Firebase Childs
+    public static final String USERS_CHILD= "users";
+
 
 
 }

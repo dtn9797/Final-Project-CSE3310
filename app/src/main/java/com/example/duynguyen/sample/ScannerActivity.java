@@ -1,5 +1,6 @@
 package com.example.duynguyen.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -8,21 +9,41 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.duynguyen.sample.utils.CodeValidation;
+import com.example.duynguyen.sample.utils.Utils;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
+    private String mUserType;
+    public static String USER_EXTRA = "userEx";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activiy_scanner);
 
+
+        if (savedInstanceState == null) {
+            Intent intent = getIntent();
+            if (intent == null) {
+                closeOnError();
+            }
+
+            mUserType = intent.getParcelableExtra(USER_EXTRA);
+        }
+
+
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZXingScannerView(this);
         contentFrame.addView(mScannerView);
+    }
+
+
+    private void closeOnError() {
+        finish();
+        Toast.makeText(this, getString(R.string.close_on_intent_error), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -45,9 +66,9 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
                 ", Format = " + result.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
 
         //temporary use below portion (47->51). Description: validate class/student id.
-        if (CodeInputActivity.userType.equals(CodeInputActivity.PARENT_USER)) {
+        if (mUserType.equals(Utils.PARENT)) {
             CodeValidation.checkStudentId(result.getText(), CodeInputActivity.mDatabase, getBaseContext());
-        } else if (CodeInputActivity.userType.equals(CodeInputActivity.STUDENT_USER)) {
+        } else if (mUserType.equals(Utils.STUDENT)) {
             CodeValidation.checkClassId(result.getText(), CodeInputActivity.mDatabase, getBaseContext());
         }
 
