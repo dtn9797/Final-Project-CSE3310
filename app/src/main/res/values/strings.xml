@@ -33,4 +33,6 @@
     <string name="lastName">Last Name</string>
     <string name="next">Next</string>
     <string name="close_on_intent_error">Error</string>
+    <string name="classroom_information">Classroom Infomation</string>
+    <string name="type_in_classroom_name_here">Class Room Name</string>
 </resources>

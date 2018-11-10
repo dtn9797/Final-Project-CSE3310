@@ -5,8 +5,10 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.duynguyen.sample.model.ClassRoom;
 import com.example.duynguyen.sample.model.Parent;
 import com.example.duynguyen.sample.model.Student;
+import com.example.duynguyen.sample.model.Teacher;
 import com.example.duynguyen.sample.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -64,6 +66,33 @@ public class FirebaseUtils {
 
     }
 
+    private static void addTeacherToDatabase (final Context context, User user, String classId){
+        Teacher teacher = new Teacher(user);
+        teacher.setClassId(classId);
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(Utils.USERS_CHILD);
+        DatabaseReference classRef = FirebaseDatabase.getInstance().getReference().child(Utils.CLASSES_CHILD);
+
+        teacher.setfUserId(userRef.push().getKey());
+        //add parent id in users
+        userRef.child(teacher.getfUserId()).setValue(teacher).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(context, "Added Teacher successfully in users",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //add parent id in class
+        classRef.child(classId).child(Utils.TEACHER_CHILD).child(teacher.getfUserId()).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(context, "Added Teacher successfully in their classes",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+    }
+
     public static void signIn (String email, String password, final String classId, final String studentId, final User user, final Context context){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(email,password)
@@ -77,6 +106,8 @@ public class FirebaseUtils {
                                 addStudentUserToDatabase(context, user,classId);
                             }else if (user.getUserType().equals(Utils.PARENT)){
                                 addParentUserToDatabase(context, user,classId,studentId);
+                            }else {
+                                addTeacherToDatabase(context,user,classId);
                             }
                         }else{
                             //need to go back to the signup screen
@@ -84,6 +115,11 @@ public class FirebaseUtils {
                         }
                     }
                 });
+    }
+
+    public static void addClass (ClassRoom classRoom) {
+        DatabaseReference classRef = FirebaseDatabase.getInstance().getReference().child(Utils.CLASSES_CHILD);
+        classRef.child(classRoom.getClassId()).setValue(classRoom);
     }
 }
 

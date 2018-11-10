@@ -30,6 +30,7 @@
             android:parentActivityName=".CodeInputActivity"/>
         <activity android:name=".CodeInputActivity"/>
         <activity android:name=".SignUpActivity"/>
+        <activity android:name=".CreateClassActivity"/>
     </application>
 
 </manifest>

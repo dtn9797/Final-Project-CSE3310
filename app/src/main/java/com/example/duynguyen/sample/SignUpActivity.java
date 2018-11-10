@@ -144,6 +144,11 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
                 intent.putExtra(CodeInputActivity.USER_EXTRA,user);
                 startActivity(intent);
             }
+            else {
+                Intent intent = new Intent(this,CreateClassActivity.class);
+                intent.putExtra(CreateClassActivity.USER_EXTRA,user);
+                startActivity(intent);
+            }
 
 
         }
