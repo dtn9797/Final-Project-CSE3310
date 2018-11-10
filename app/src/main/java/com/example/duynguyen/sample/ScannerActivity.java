@@ -69,7 +69,7 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         if (mUserType.equals(Utils.PARENT)) {
             CodeValidation.checkStudentId(result.getText(), CodeInputActivity.mDatabase, getBaseContext());
         } else if (mUserType.equals(Utils.STUDENT)) {
-            CodeValidation.checkClassId(result.getText(), CodeInputActivity.mDatabase, getBaseContext());
+//            CodeValidation.checkClassId(result.getText(), CodeInputActivity.mDatabase, getBaseContext());
         }
 
         //call scanner activity again

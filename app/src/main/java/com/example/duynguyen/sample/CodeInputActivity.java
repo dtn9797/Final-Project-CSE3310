@@ -103,7 +103,7 @@ public class CodeInputActivity extends AppCompatActivity implements View.OnClick
                     //need to rewrite checkStudentId
                     CodeValidation.checkStudentId(String.valueOf(enterCodeEt.getText()), mDatabase, getBaseContext());
                 } else if (mUser.getUserType().equals(Utils.STUDENT)) {
-                    CodeValidation.checkClassId(String.valueOf(enterCodeEt.getText()), mDatabase, getBaseContext());
+                    CodeValidation.checkClassId(String.valueOf(enterCodeEt.getText()),mUser,mDatabase, getBaseContext());
                 }
                 break;
             case R.id.scan_code_btn:

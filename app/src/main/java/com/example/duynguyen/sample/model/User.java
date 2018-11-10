@@ -22,6 +22,22 @@ public class User implements Parcelable {
         this.phoneNum = phoneNum;
     }
 
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
     public String getUserType() {
         return userType;
     }

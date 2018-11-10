@@ -139,7 +139,7 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
         else {
             //Go to CodeInputActivity if user type is parent/student
             User user = new User(getUserType,getFirstName,getLastName,getMobileNumber,getUserId,getPassword);
-            if (getUserType.equals(Utils.PARENT)||getUserType.equals(Utils.TEACHER)){
+            if (getUserType.equals(Utils.PARENT)||getUserType.equals(Utils.STUDENT)){
                 Intent intent = new Intent(this,CodeInputActivity.class);
                 intent.putExtra(CodeInputActivity.USER_EXTRA,user);
                 startActivity(intent);
