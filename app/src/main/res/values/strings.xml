@@ -23,7 +23,7 @@
     <string name="terms_conditions">By clicking SignUp you agree all the Terms and Conditions.</string>
     <string name="signUp">SIGN UP</string>
     <string name="already_user">Already have Account? Click here to log in .</string>
-    <string name="registered_emailid">Please enter your Registered Email Id below:</string>
+    <string name="registered_emailid">Please enter your Registered Email Id if you are a parent or a teacher. If you are a student, ask your parent or your teacher to update password:</string>
     <string name="submit">SUBMIT</string>
     <string name="back">BACK</string>
     <string name="teacher">teacher</string>

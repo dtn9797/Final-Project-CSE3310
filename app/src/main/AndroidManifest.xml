@@ -31,6 +31,7 @@
         <activity android:name=".CodeInputActivity"/>
         <activity android:name=".SignUpActivity"/>
         <activity android:name=".CreateClassActivity"/>
+        <activity android:name=".ForgotPassActivity"/>
     </application>
 
 </manifest>

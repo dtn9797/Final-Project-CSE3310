@@ -71,7 +71,7 @@ public class CodeValidation {
             dataBase.child(Utils.CLASSES_CHILD).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child(classId+"/"+Utils.STUDENTS_CHILD
+                    if (!studentId.equals("")||studentId.length()!=0||dataSnapshot.child(classId+"/"+Utils.STUDENTS_CHILD
                             +"/"+studentId).exists()) {
                         //Go to the main screen
                         Toast.makeText(context, "Data exits",Toast.LENGTH_SHORT).show();
