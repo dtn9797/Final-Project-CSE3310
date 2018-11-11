@@ -36,7 +36,8 @@
             android:padding="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:text="dtn97797@gmail.com"/>
 
         <View
             android:layout_width="fill_parent"
@@ -57,7 +58,8 @@
             android:padding="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:text="paradise"/>
 
         <LinearLayout
             android:layout_width="fill_parent"

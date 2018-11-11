@@ -17,13 +17,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class FirebaseUtils {
 
     private static void addStudentUserToDatabase(final Context context, User user, String classId){
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         Student student =new Student(user);
         student.setClassId(classId);
-        student.setfUserId(user.getLoginId());
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        student.setfUserId(auth.getCurrentUser().getUid());
         //add student id in users
         database.child(Utils.USERS_CHILD).child(student.getfUserId()).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -48,7 +51,8 @@ public class FirebaseUtils {
         Parent parent = new Parent(user);
         parent.setStudentId(studentId);
         parent.setClassId(classId);
-        parent.setfUserId(userRef.push().getKey());
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        parent.setfUserId(auth.getCurrentUser().getUid());
         //add parent id in users
         userRef.child(parent.getfUserId()).setValue(parent).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -72,7 +76,8 @@ public class FirebaseUtils {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(Utils.USERS_CHILD);
         DatabaseReference classRef = FirebaseDatabase.getInstance().getReference().child(Utils.CLASSES_CHILD);
 
-        teacher.setfUserId(userRef.push().getKey());
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        teacher.setfUserId(Objects.requireNonNull(auth.getCurrentUser()).getUid());
         //add parent id in users
         userRef.child(teacher.getfUserId()).setValue(teacher).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
