@@ -66,6 +66,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (currentUser!=null){
             Toast.makeText(getApplicationContext(), "Do Login. User id is"+currentUser.getUid()+" in users branch", Toast.LENGTH_SHORT)
                     .show();
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         }
     }
 

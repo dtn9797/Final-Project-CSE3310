@@ -1,11 +1,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.duynguyen.sample.CodeInputActivity">
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+    tools:context="com.example.kenh.sample.CodeInputActivity">
 
+    <!-- list of menu items with icons -->
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_account"
+            android:icon="@mipmap/baseline_person_black_18dp"
+            android:title="My Account" />
+
+        <item android:id="@+id/nav_chat"
+            android:icon="@mipmap/baseline_message_black_18dp"
+            android:title="Chat" />
+
+        <item android:id="@+id/nav_rewards"
+            android:icon="@mipmap/baseline_assessment_black_18dp"
+            android:title="Rewards" />
+
+        <item android:id="@+id/nav_evaluation"
+            android:icon="@mipmap/baseline_class_black_18dp"
+            android:title="Behavior evaluation" />
+
+        <item android:id="@+id/nav_settings"
+            android:icon="@mipmap/baseline_settings_black_18dp"
+            android:title="Settings" />
+
+        <item android:id="@+id/nav_logout"
+            android:icon="@mipmap/baseline_exit_to_app_black_18dp"
+            android:title="Logout" />
+    </group>
 </menu>

@@ -7,7 +7,7 @@
     <string name="scan_code">Scan Code</string>
     <string name="code">mystudent12345</string>
 
-    <string name="email">Email Id</string>
+    <string name="email">Email/User Id</string>
     <string name="passowrd">Password</string>
     <string name="login">LOGIN</string>
     <string name="show_pwd">Show Password</string>
@@ -35,4 +35,9 @@
     <string name="close_on_intent_error">Error</string>
     <string name="classroom_information">Classroom Infomation</string>
     <string name="type_in_classroom_name_here">Class Room Name</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>
