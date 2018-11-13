@@ -9,15 +9,20 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mToggle;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth= FirebaseAuth.getInstance();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
@@ -79,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new SettingFragment()).commit();
                 break;
+
+            case R.id.nav_logout:
+                mAuth.signOut();
+                finish();
+
 
         }
 
