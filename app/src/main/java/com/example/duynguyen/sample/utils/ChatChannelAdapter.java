@@ -12,27 +12,33 @@ import com.example.duynguyen.sample.R;
 
 import java.util.ArrayList;
 
-public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.ChatProfileVH> {
+public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.ChatChannelVH> {
 
     Context mContext;
     ArrayList<MessageChannel> mData = new ArrayList<>();
+    protected static ItemListener mItemListener;
 
 
-    public ChatChannelAdapter(Context mContext, ArrayList<MessageChannel> mData) {
+    public ChatChannelAdapter(Context mContext, ArrayList<MessageChannel> mData, ItemListener itemListener) {
         this.mContext = mContext;
         this.mData = mData;
+        this.mItemListener = itemListener;
+    }
+
+    public interface ItemListener {
+        void onChannelClick(int position);
     }
 
     @NonNull
     @Override
-    public ChatProfileVH onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ChatChannelVH onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        return new ChatChannelAdapter.ChatProfileVH(inflater.inflate(R.layout.chat_channel_vh, viewGroup, false));
+        return new ChatChannelVH(inflater.inflate(R.layout.chat_channel_vh, viewGroup, false));
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChatProfileVH chatProfileVH, int i) {
+    public void onBindViewHolder(@NonNull ChatChannelVH chatChannelVH, int i) {
 
     }
 
@@ -41,9 +47,19 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
         return mData.size();
     }
 
-    public class ChatProfileVH extends RecyclerView.ViewHolder {
-        public ChatProfileVH(@NonNull View itemView) {
+    public class ChatChannelVH extends RecyclerView.ViewHolder implements View.OnClickListener {
+        int posVh = 0;
+
+        public ChatChannelVH(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
         }
+
+
+        @Override
+        public void onClick(View v) {
+            ChatChannelAdapter.mItemListener.onChannelClick(posVh);
+        }
+
     }
 }

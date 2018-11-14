@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.example.duynguyen.sample.Model.FriendlyMessage;
 import com.example.duynguyen.sample.Model.MessageChannel;
@@ -24,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ChatMenuActivity extends AppCompatActivity {
+public class ChatMenuActivity extends AppCompatActivity implements ChatChannelAdapter.ItemListener {
 
     @BindView(R.id.chat_channel_rv)
     RecyclerView chatChannelRv;
@@ -53,7 +54,7 @@ public class ChatMenuActivity extends AppCompatActivity {
 
 //        get ready for chatChannelRv
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        ChatChannelAdapter chatChannelAdapter = new ChatChannelAdapter(this,mMesChannels);
+        ChatChannelAdapter chatChannelAdapter = new ChatChannelAdapter(this,mMesChannels,this);
         chatChannelRv.setAdapter(chatChannelAdapter);
         chatChannelRv.setLayoutManager(linearLayoutManager);
 
@@ -125,4 +126,8 @@ public class ChatMenuActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onChannelClick(int position) {
+        Toast.makeText(getBaseContext(),"hello",Toast.LENGTH_LONG).show();
+    }
 }
