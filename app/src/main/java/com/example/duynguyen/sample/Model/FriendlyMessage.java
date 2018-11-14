@@ -21,18 +21,18 @@ public class FriendlyMessage {
     private String text;
     private String name;
     private String userType;
-    private String photoUrl;
-    private String imageUrl;
+    private String receiverId;
+    private String senderId;
+
+
 
     public FriendlyMessage() {
     }
 
-    public FriendlyMessage(String text, String name, String userType, String photoUrl, String imageUrl) {
+    public FriendlyMessage(String text, String name, String userType) {
         this.text = text;
         this.name = name;
         this.userType = userType;
-        this.photoUrl = photoUrl;
-        this.imageUrl = imageUrl;
     }
 
     public String getUserType() {
@@ -63,23 +63,8 @@ public class FriendlyMessage {
         this.name = name;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
     public String getText() {
         return text;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }

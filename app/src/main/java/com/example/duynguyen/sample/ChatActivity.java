@@ -120,9 +120,7 @@ public class ChatActivity extends AppCompatActivity {
                 FriendlyMessage friendlyMessage = new
                         FriendlyMessage(messageEt.getText().toString(),
                         "userName",
-                        mUserType,
-                        null,
-                        null /* no image */);
+                        mUserType);
                 mClassDatabase.child(messPath)
                         .push().setValue(friendlyMessage);
 
