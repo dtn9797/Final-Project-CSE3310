@@ -6,11 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.duynguyen.sample.Model.MessageChannel;
 import com.example.duynguyen.sample.R;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.ChatChannelVH> {
 
@@ -39,7 +44,7 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ChatChannelVH chatChannelVH, int i) {
-
+        chatChannelVH.setData(mData.get(i),i);
     }
 
     @Override
@@ -47,11 +52,22 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
         return mData.size();
     }
 
+
+
+
     public class ChatChannelVH extends RecyclerView.ViewHolder implements View.OnClickListener {
         int posVh = 0;
 
+        @BindView(R.id.chat_channel_name_tv)
+        TextView nameTv;
+        @BindView(R.id.chat_channel_info_tv)
+        TextView infoTv;
+        @BindView(R.id.chat_channel_civ)
+        CircleImageView civ;
+
         public ChatChannelVH(@NonNull View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(this);
         }
 
@@ -61,5 +77,15 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
             ChatChannelAdapter.mItemListener.onChannelClick(posVh);
         }
 
+        public void setData(MessageChannel data,int posVh) {
+            this.posVh = posVh;
+            if (data.getChannelType().equals("announcement")){
+
+            }else {
+                civ.setImageResource(R.drawable.parent);
+                nameTv.setText("Parent Name");
+                infoTv.setText("This is private chat");
+            }
+        }
     }
 }

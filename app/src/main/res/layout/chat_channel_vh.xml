@@ -86,11 +86,11 @@
         android:text="@string/messages_will_be_sent_to_all_parents"
         android:layout_marginStart="10dp" />
     </LinearLayout>
-    <ImageView
-        android:id="@+id/active_indicator_iv"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:background="@drawable/active_indicator"
-        android:layout_gravity="center"
-        android:layout_marginStart="20dp"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/active_indicator_iv"-->
+        <!--android:layout_width="15dp"-->
+        <!--android:layout_height="15dp"-->
+        <!--android:background="@drawable/active_indicator"-->
+        <!--android:layout_gravity="center|end"-->
+        <!--android:layout_marginStart="20dp"/>-->
 </LinearLayout>

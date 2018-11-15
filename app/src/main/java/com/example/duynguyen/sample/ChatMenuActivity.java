@@ -88,8 +88,11 @@ public class ChatMenuActivity extends AppCompatActivity implements ChatChannelAd
         FriendlyMessage friendlyMessage = new FriendlyMessage("hi","Duy","teacher");
         List<FriendlyMessage> messages = new ArrayList<FriendlyMessage>();
         messages.add(friendlyMessage);
-        MessageChannel messageChannel = new MessageChannel(messages);
-        mMesChannels.add(messageChannel);
+        MessageChannel messageChannel0 = new MessageChannel("announcement",messages);
+        mMesChannels.add(messageChannel0);
+
+        MessageChannel messageChannel1 = new MessageChannel("private",messages);
+        mMesChannels.add(messageChannel1);
     }
 
 
