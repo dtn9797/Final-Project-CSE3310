@@ -36,6 +36,7 @@ public class ChatActivity extends AppCompatActivity {
     public boolean mAnnouncChannel = true;
     public String mClassId = "myStudent12325";
     public String mParentId = "parentid2";
+    //if user is a parent, get teacher info first before go to chat activity
     public String mTeacherId = "teacherid0";
 
     private DatabaseReference mClassDatabase,mNotificationRef;

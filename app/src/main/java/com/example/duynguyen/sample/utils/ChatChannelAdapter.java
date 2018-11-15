@@ -20,18 +20,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.ChatChannelVH> {
 
     Context mContext;
-    ArrayList<MessageChannel> mData = new ArrayList<>();
+    ArrayList<String> mData = new ArrayList<>();
     protected static ItemListener mItemListener;
 
 
-    public ChatChannelAdapter(Context mContext, ArrayList<MessageChannel> mData, ItemListener itemListener) {
+    public ChatChannelAdapter(Context mContext, ArrayList<String> mData, ItemListener itemListener) {
         this.mContext = mContext;
         this.mData = mData;
         this.mItemListener = itemListener;
     }
 
     public interface ItemListener {
-        void onChannelClick(int position);
+        void onChannelClick(String key);
+    }
+    public void setmData(ArrayList<String> data ){
+        mData = data;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -44,7 +48,7 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ChatChannelVH chatChannelVH, int i) {
-        chatChannelVH.setData(mData.get(i),i);
+        chatChannelVH.setData(mData.get(i));
     }
 
     @Override
@@ -56,7 +60,7 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
 
 
     public class ChatChannelVH extends RecyclerView.ViewHolder implements View.OnClickListener {
-        int posVh = 0;
+        String mKey;
 
         @BindView(R.id.chat_channel_name_tv)
         TextView nameTv;
@@ -74,12 +78,12 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
 
         @Override
         public void onClick(View v) {
-            ChatChannelAdapter.mItemListener.onChannelClick(posVh);
+            ChatChannelAdapter.mItemListener.onChannelClick(mKey);
         }
 
-        public void setData(MessageChannel data,int posVh) {
-            this.posVh = posVh;
-            if (data.getChannelType().equals("announcement")){
+        public void setData(String key) {
+            mKey = key;
+            if (mKey.equals("announcement")){
 
             }else {
                 civ.setImageResource(R.drawable.parent);

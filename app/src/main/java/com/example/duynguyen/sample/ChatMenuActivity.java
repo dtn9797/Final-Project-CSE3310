@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,11 @@ import android.widget.Toast;
 import com.example.duynguyen.sample.Model.FriendlyMessage;
 import com.example.duynguyen.sample.Model.MessageChannel;
 import com.example.duynguyen.sample.utils.ChatChannelAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +35,14 @@ public class ChatMenuActivity extends AppCompatActivity implements ChatChannelAd
     @BindView(R.id.chat_channel_rv)
     RecyclerView chatChannelRv;
 
-    private DatabaseReference mDatabase;
+    private DatabaseReference mMessRef;
     private NotificationCompat.Builder mBuilder;
     public String CHANNEL_ID = "12345";
 
 
-    private String mUserType= "teacher";
-    private ArrayList<MessageChannel> mMesChannels = new ArrayList<>();
+    private String mUserType = "teacher";
+    private ArrayList<String> mMesChannelKeys = new ArrayList<>();
+    private ChatChannelAdapter mChatChannelAdapter;
 
 
     @Override
@@ -44,6 +50,8 @@ public class ChatMenuActivity extends AppCompatActivity implements ChatChannelAd
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_menu);
         ButterKnife.bind(this);
+
+        mMessRef = FirebaseDatabase.getInstance().getReference().child("messages");
 
         inniMessChan();
         //Initialize database
@@ -54,8 +62,8 @@ public class ChatMenuActivity extends AppCompatActivity implements ChatChannelAd
 
 //        get ready for chatChannelRv
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        ChatChannelAdapter chatChannelAdapter = new ChatChannelAdapter(this,mMesChannels,this);
-        chatChannelRv.setAdapter(chatChannelAdapter);
+        mChatChannelAdapter = new ChatChannelAdapter(this, mMesChannelKeys, this);
+        chatChannelRv.setAdapter(mChatChannelAdapter);
         chatChannelRv.setLayoutManager(linearLayoutManager);
 
 
@@ -85,14 +93,26 @@ public class ChatMenuActivity extends AppCompatActivity implements ChatChannelAd
     }
 
     private void inniMessChan() {
-        FriendlyMessage friendlyMessage = new FriendlyMessage("hi","Duy","teacher");
-        List<FriendlyMessage> messages = new ArrayList<FriendlyMessage>();
-        messages.add(friendlyMessage);
-        MessageChannel messageChannel0 = new MessageChannel("announcement",messages);
-        mMesChannels.add(messageChannel0);
 
-        MessageChannel messageChannel1 = new MessageChannel("private",messages);
-        mMesChannels.add(messageChannel1);
+        mMessRef.child("myStudent80259").addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        mMesChannelKeys = new ArrayList<>();
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                            String key  = postSnapshot.getKey();
+                            mMesChannelKeys.add(key);
+                        }
+                        mChatChannelAdapter.setmData(mMesChannelKeys);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                }
+        );
     }
 
 
@@ -130,7 +150,7 @@ public class ChatMenuActivity extends AppCompatActivity implements ChatChannelAd
 
 
     @Override
-    public void onChannelClick(int position) {
-        Toast.makeText(getBaseContext(),"hello",Toast.LENGTH_LONG).show();
+    public void onChannelClick(String key) {
+        Toast.makeText(getBaseContext(), "hello", Toast.LENGTH_LONG).show();
     }
 }
