@@ -46,8 +46,9 @@ public class FirebaseUtils {
     }
 
     private static void addParentUserToDatabase (final Context context, User user, String classId,String studentId){
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(Utils.USERS_CHILD);
-        DatabaseReference classRef = FirebaseDatabase.getInstance().getReference().child(Utils.CLASSES_CHILD);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userRef = reference.child(Utils.USERS_CHILD);
+        DatabaseReference classRef = reference.child(Utils.CLASSES_CHILD);
         Parent parent = new Parent(user);
         parent.setStudentId(studentId);
         parent.setClassId(classId);
@@ -67,14 +68,18 @@ public class FirebaseUtils {
                 Toast.makeText(context, "Added Parent successfully in their classes",Toast.LENGTH_SHORT).show();
             }
         });
+        //add messag private channel
+        DatabaseReference messagesRef = reference.child(Utils.MESSAGES_CHILD);
+        messagesRef.child(classId).child(parent.getfUserId()).setValue("");
 
     }
 
     private static void addTeacherToDatabase (final Context context, User user, String classId){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Teacher teacher = new Teacher(user);
         teacher.setClassId(classId);
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child(Utils.USERS_CHILD);
-        DatabaseReference classRef = FirebaseDatabase.getInstance().getReference().child(Utils.CLASSES_CHILD);
+        DatabaseReference userRef = reference.child(Utils.USERS_CHILD);
+        DatabaseReference classRef = reference.child(Utils.CLASSES_CHILD);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         teacher.setfUserId(Objects.requireNonNull(auth.getCurrentUser()).getUid());
@@ -93,9 +98,10 @@ public class FirebaseUtils {
                 Toast.makeText(context, "Added Teacher successfully in their classes",Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
+        //add messag announcement channel
+        DatabaseReference messagesRef = reference.child(Utils.MESSAGES_CHILD);
+        messagesRef.setValue(classId);
+        messagesRef.child(classId).child(Utils.ANNOUNCEMENT_CHILD).setValue("");
     }
 
     public static void signIn (String email, String password, final String classId, final String studentId, final User user, final Context context){
@@ -123,8 +129,11 @@ public class FirebaseUtils {
     }
 
     public static void addClass (ClassRoom classRoom) {
-        DatabaseReference classRef = FirebaseDatabase.getInstance().getReference().child(Utils.CLASSES_CHILD);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        DatabaseReference classRef = reference.child(Utils.CLASSES_CHILD);
         classRef.child(classRoom.getClassId()).setValue(classRoom);
+
     }
 }
 
