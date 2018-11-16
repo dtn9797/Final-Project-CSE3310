@@ -28,6 +28,10 @@ public class Utils {
     public static final String TEACHER_CHILD= "teacher";
     public static final String ANNOUNCEMENT_CHILD = "announcement";
 
+    //Shared Preference keys
+    public static final String CURRENT_USER_KEY= "current_user";
+    public static final String CLASS_ROOM_KEY= "classroom_user";
+
 
 
 

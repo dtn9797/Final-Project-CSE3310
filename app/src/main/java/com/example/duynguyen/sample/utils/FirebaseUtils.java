@@ -14,8 +14,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
@@ -49,7 +52,7 @@ public class FirebaseUtils {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference userRef = reference.child(Utils.USERS_CHILD);
         DatabaseReference classRef = reference.child(Utils.CLASSES_CHILD);
-        Parent parent = new Parent(user);
+        final Parent parent = new Parent(user);
         parent.setStudentId(studentId);
         parent.setClassId(classId);
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -68,10 +71,26 @@ public class FirebaseUtils {
                 Toast.makeText(context, "Added Parent successfully in their classes",Toast.LENGTH_SHORT).show();
             }
         });
-        //add messag private channel
-        DatabaseReference messagesRef = reference.child(Utils.MESSAGES_CHILD);
-        messagesRef.child(classId).child(parent.getfUserId()).setValue("");
 
+        //add messag private channel w/ parent name, children name
+        DatabaseReference messagesRef = reference.child(Utils.MESSAGES_CHILD);
+        final DatabaseReference messagesChannelRef = messagesRef.child(classId).child(parent.getfUserId());
+        ////get & set kid name in message private channel
+        userRef.child(parent.getStudentId()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User studentUser = dataSnapshot.getValue(User.class);
+                String studentName = studentUser.getFirstName()+" "+studentUser.getLastName();
+                messagesChannelRef.child("studentName").setValue(studentName);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        ////set parent name in message private channel
+        messagesChannelRef.child("parentName").setValue(parent.getFirstName()+" "+parent.getLastName());
     }
 
     private static void addTeacherToDatabase (final Context context, User user, String classId){
@@ -101,7 +120,8 @@ public class FirebaseUtils {
         //add messag announcement channel
         DatabaseReference messagesRef = reference.child(Utils.MESSAGES_CHILD);
         messagesRef.setValue(classId);
-        messagesRef.child(classId).child(Utils.ANNOUNCEMENT_CHILD).setValue("");
+        String teacherName = teacher.getFirstName() + " " + teacher.getLastName();
+        messagesRef.child(classId).child(Utils.ANNOUNCEMENT_CHILD).child("teacherName").setValue(teacherName);
     }
 
     public static void signIn (String email, String password, final String classId, final String studentId, final User user, final Context context){

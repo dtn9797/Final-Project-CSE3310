@@ -37,7 +37,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="16sp"
-            android:text="dtn97797@gmail.com"/>
+            android:text="teacher11@gmail.com"/>
 
         <View
             android:layout_width="fill_parent"
