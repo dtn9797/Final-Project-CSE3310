@@ -1,4 +1,4 @@
-package com.example.duynguyen.sample;
+package com.example.duynguyen.sample.ChatComp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.duynguyen.sample.Model.FriendlyMessage;
+import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.utils.ChatAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;

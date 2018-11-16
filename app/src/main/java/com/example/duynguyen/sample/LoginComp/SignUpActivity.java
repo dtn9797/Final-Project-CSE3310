@@ -1,4 +1,4 @@
-package com.example.duynguyen.sample;
+package com.example.duynguyen.sample.LoginComp;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -15,12 +15,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.model.User;
-import com.example.duynguyen.sample.utils.CodeValidation;
 import com.example.duynguyen.sample.utils.CustomToast;
 import com.example.duynguyen.sample.utils.Utils;
 
-import java.security.spec.ECPoint;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

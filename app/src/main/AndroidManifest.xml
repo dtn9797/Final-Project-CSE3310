@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginComp.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,23 +26,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScannerActivity"
-            android:parentActivityName=".CodeInputActivity"/>
-        <activity android:name=".CodeInputActivity"/>
-        <activity android:name=".SignUpActivity"/>
-        <activity android:name=".CreateClassActivity"/>
-        <activity android:name=".ForgotPassActivity"/>
+        <activity android:name=".LoginComp.ScannerActivity"
+            android:parentActivityName=".LoginComp.CodeInputActivity"/>
+        <activity android:name=".LoginComp.CodeInputActivity"/>
+        <activity android:name=".LoginComp.SignUpActivity"/>
+        <activity android:name=".LoginComp.CreateClassActivity"/>
+        <activity android:name=".LoginComp.ForgotPassActivity"/>
         <activity android:name=".MainActivity" />
-        <activity android:name=".ChatMenuActivity"/>
-        <activity android:name=".ChatActivity"
-            android:parentActivityName=".ChatMenuActivity"/>
-        <service android:name=".MyFirebaseMessagingService">
+        <activity android:name=".ChatComp.ChatActivity"
+            android:parentActivityName=".MainActivity"/>
+        <service android:name=".ChatComp.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <service
-            android:name=".MyFirebaseInstanceIdService"
+            android:name=".ChatComp.MyFirebaseInstanceIdService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />

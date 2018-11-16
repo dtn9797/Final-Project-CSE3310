@@ -1,4 +1,4 @@
-package com.example.duynguyen.sample;
+package com.example.duynguyen.sample.LoginComp;
 
 import android.Manifest;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.CodeValidation;
 import com.example.duynguyen.sample.utils.Utils;

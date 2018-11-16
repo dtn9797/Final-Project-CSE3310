@@ -1,4 +1,4 @@
-package com.example.duynguyen.sample;
+package com.example.duynguyen.sample.LoginComp;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.CodeValidation;
 import com.example.duynguyen.sample.utils.Utils;

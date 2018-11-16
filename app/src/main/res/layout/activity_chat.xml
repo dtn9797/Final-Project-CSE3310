@@ -8,12 +8,13 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/cast_expanded_controller_control_toolbar_min_height"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_back_black_24dp">
+        android:elevation="4dp"
+        app:navigationIcon="@drawable/ic_arrow_back_white_24dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

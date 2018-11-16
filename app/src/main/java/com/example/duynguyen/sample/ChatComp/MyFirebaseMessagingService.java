@@ -1,4 +1,4 @@
-package com.example.duynguyen.sample;
+package com.example.duynguyen.sample.ChatComp;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
+import com.example.duynguyen.sample.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -44,7 +45,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_arrow_back_black_24dp)
+                .setSmallIcon(R.drawable.ic_arrow_back_white_24dp)
                 .setContentTitle("Title")
                 .setContentText(contextTxt)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

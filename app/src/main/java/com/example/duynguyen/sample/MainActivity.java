@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.example.duynguyen.sample.ChatComp.ChatMenuFragment;
 import com.example.duynguyen.sample.model.ClassRoom;
 import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.Utils;
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //getActionBar().setTitle("Chat");
                 getSupportActionBar().setTitle("Chat");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ChatFragment()).commit();
+                        new ChatMenuFragment()).commit();
                 break;
 
             case R.id.nav_evaluation:

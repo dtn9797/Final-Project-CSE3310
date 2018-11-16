@@ -1,4 +1,4 @@
-package com.example.duynguyen.sample;
+package com.example.duynguyen.sample.ChatComp;
 
 import android.util.Log;
 

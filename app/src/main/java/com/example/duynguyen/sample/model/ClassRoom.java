@@ -9,6 +9,9 @@ public class ClassRoom {
         this.classId = classId;
     }
 
+    public ClassRoom() {
+    }
+
     public String getName() {
         return name;
     }

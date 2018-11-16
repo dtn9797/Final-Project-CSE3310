@@ -1,4 +1,4 @@
-package com.example.duynguyen.sample;
+package com.example.duynguyen.sample.LoginComp;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.duynguyen.sample.MainActivity;
+import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.utils.CustomToast;
 import com.example.duynguyen.sample.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;

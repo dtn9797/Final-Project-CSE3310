@@ -1,4 +1,4 @@
-package com.example.duynguyen.sample;
+package com.example.duynguyen.sample.ChatComp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.ChatChannelAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -92,7 +93,7 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
 //        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 //
 //        mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
-//                .setSmallIcon(R.drawable.ic_arrow_back_black_24dp)
+//                .setSmallIcon(R.drawable.ic_arrow_back_white_24dp)
 //                .setContentTitle("Title")
 //                .setContentText("Content")
 //                .setPriority(NotificationCompat.PRIORITY_HIGH)
