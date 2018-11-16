@@ -11,4 +11,9 @@
     <!--//Login Screen-->
     <color name="white_greyish">#EEEEEE</color>
     <color name="white">#ffff</color>
+    <color name="colorWhite">#ffffff</color>
+    <!--Chat screen-->
+    <color name="colorOutcomingBubble">#DFFECD</color>
+    <color name="colorIncomingBubble">#D3D3D3</color>
+
 </resources>

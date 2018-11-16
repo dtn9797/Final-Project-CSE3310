@@ -40,4 +40,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="announcement">Announcement</string>
+    <string name="messages_will_be_sent_to_all_parents">Messages will be sent to all parents</string>
 </resources>
