@@ -1,5 +1,6 @@
 package com.example.duynguyen.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,15 +32,19 @@ public class ChatActivity extends AppCompatActivity {
     public String ANNOUNCEMENT_CHANNEL_CHILD = "announcement";
     public String PRIVATE_CHANNEL_CHILD = "privates";
 
+    public static String CLASS_ID_EXTRA = "classid";
+    public static String KEY_ID_EXTRA = "keyid";
+    public static String USER_TYPE_EXTRA = "userid";
+
     //these below variables are for setting private/ announcement chat room w/ teacher & user id
     public String mUserType = "teacher";
-    public boolean mAnnouncChannel = true;
-    public String mClassId = "myStudent12325";
+    public boolean mAnnouncChannel = false;
+    public String mClassId ;
     public String mParentId = "parentid2";
     //if user is a parent, get teacher info first before go to chat activity
     public String mTeacherId = "teacherid0";
 
-    private DatabaseReference mClassDatabase,mNotificationRef;
+    private DatabaseReference mRef, mNotificationRef;
     private ChatAdapter mFirebaseAdapter;
 
     @BindView(R.id.profile_Iv)
@@ -59,17 +64,23 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
 
+        Intent intent = getIntent();
+        mClassId = intent.getStringExtra(CLASS_ID_EXTRA);
+        mUserType = intent.getStringExtra(USER_TYPE_EXTRA);
+        String key = intent.getStringExtra(KEY_ID_EXTRA);
+        if (key.equals(ANNOUNCEMENT_CHANNEL_CHILD)) mAnnouncChannel = true;
+
         setUpView();
     }
 
     private void setUpView() {
-        mClassDatabase = FirebaseDatabase.getInstance().getReference();
-        mNotificationRef = mClassDatabase.child("notifications");
+        mRef = FirebaseDatabase.getInstance().getReference();
+        mNotificationRef = mRef.child("notifications");
 
-        final String messPath = ((mAnnouncChannel)?MESSAGES_CHILD+"/"+mClassId+"/"+ANNOUNCEMENT_CHANNEL_CHILD
-                                                :MESSAGES_CHILD+"/"+mClassId+"/"+(mTeacherId+"+"+mParentId));
+        final String messPath = ((mAnnouncChannel) ? MESSAGES_CHILD + "/" + mClassId + "/" + ANNOUNCEMENT_CHANNEL_CHILD
+                : MESSAGES_CHILD + "/" + mClassId + "/" + (mTeacherId + "+" + mParentId));
 
-        SnapshotParser<FriendlyMessage> parser = new SnapshotParser<FriendlyMessage>(){
+        SnapshotParser<FriendlyMessage> parser = new SnapshotParser<FriendlyMessage>() {
             @NonNull
             @Override
             public FriendlyMessage parseSnapshot(@NonNull DataSnapshot snapshot) {
@@ -81,7 +92,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         };
 
-        DatabaseReference messagesRef = mClassDatabase.child(messPath);
+        DatabaseReference messagesRef = mRef.child(messPath);
         FirebaseRecyclerOptions<FriendlyMessage> options =
                 new FirebaseRecyclerOptions.Builder<FriendlyMessage>()
                         .setQuery(messagesRef, parser)
@@ -112,7 +123,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 //        Need to set up profile tv and iv
-        if (mUserType.equals("parent")&&mAnnouncChannel){
+        if (mUserType.equals("parent") && mAnnouncChannel) {
             sendBtn.setEnabled(false);
         }
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -122,13 +133,13 @@ public class ChatActivity extends AppCompatActivity {
                         FriendlyMessage(messageEt.getText().toString(),
                         "userName",
                         mUserType);
-                mClassDatabase.child(messPath)
+                mRef.child(messPath)
                         .push().setValue(friendlyMessage);
 
                 //need to change it later
                 HashMap<String, String> notMap = new HashMap<>();
-                notMap.put("from",mTeacherId);
-                notMap.put("type","announcment");
+                notMap.put("from", mTeacherId);
+                notMap.put("type", "announcment");
                 mNotificationRef.child(mClassId).push().setValue(notMap);
 
                 messageEt.setText("");

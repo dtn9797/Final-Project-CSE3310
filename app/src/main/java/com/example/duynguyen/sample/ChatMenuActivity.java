@@ -40,7 +40,8 @@ public class ChatMenuActivity extends AppCompatActivity implements ChatChannelAd
     public String CHANNEL_ID = "12345";
 
 
-    private String mUserType = "teacher";
+    private String mUserType = "parent";
+    private String mClassId = "myStudent80259";
     private ArrayList<String> mMesChannelKeys = new ArrayList<>();
     private ChatChannelAdapter mChatChannelAdapter;
 
@@ -94,7 +95,7 @@ public class ChatMenuActivity extends AppCompatActivity implements ChatChannelAd
 
     private void inniMessChan() {
 
-        mMessRef.child("myStudent80259").addValueEventListener(
+        mMessRef.child(mClassId).addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -151,6 +152,10 @@ public class ChatMenuActivity extends AppCompatActivity implements ChatChannelAd
 
     @Override
     public void onChannelClick(String key) {
-        Toast.makeText(getBaseContext(), "hello", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this,ChatActivity.class);
+        intent.putExtra(ChatActivity.CLASS_ID_EXTRA,mClassId);
+        intent.putExtra(ChatActivity.KEY_ID_EXTRA,key);
+        intent.putExtra(ChatActivity.USER_TYPE_EXTRA,mUserType);
+        startActivity(intent);
     }
 }
