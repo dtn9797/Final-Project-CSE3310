@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.ChatChannelAdapter;
+import com.example.duynguyen.sample.utils.Utils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,9 +41,9 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
     public String CHANNEL_ID = "12345";
 
 
-    private String mUserType = "parent";
-    private String mClassId = "myStudent80259";
-    private ArrayList<String> mMesChannelKeys = new ArrayList<>();
+    private String mUserType ;
+    private String mClassId ;
+    private ArrayList<com.example.duynguyen.sample.Model.MessageChannel> mMesChannelKeys = new ArrayList<>();
     private ChatChannelAdapter mChatChannelAdapter;
 
 
@@ -52,10 +54,13 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
         ButterKnife.bind(this,view);
 
         mMessRef = FirebaseDatabase.getInstance().getReference().child("messages");
+        User currentUser = getCurrentUserInfo();
+        mClassId = currentUser.getClassId();
+        mUserType = currentUser.getUserType();
         inniMessChan();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mChatChannelAdapter = new ChatChannelAdapter(getContext(), mMesChannelKeys, this);
+        mChatChannelAdapter = new ChatChannelAdapter(currentUser, mMesChannelKeys, this);
         chatChannelRv.setAdapter(mChatChannelAdapter);
         chatChannelRv.setLayoutManager(linearLayoutManager);
 
@@ -70,8 +75,8 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         mMesChannelKeys = new ArrayList<>();
                         for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                            String key  = postSnapshot.getKey();
-                            mMesChannelKeys.add(key);
+                            com.example.duynguyen.sample.Model.MessageChannel messageChannel  = postSnapshot.getValue(com.example.duynguyen.sample.Model.MessageChannel.class);
+                            mMesChannelKeys.add(messageChannel);
                         }
                         mChatChannelAdapter.setmData(mMesChannelKeys);
 
@@ -118,11 +123,11 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
 //        }
 //    }
 
-    private void getInfo() {
-        final SharedPreferences mPrefs = getActivity().getPreferences(getActivity().MODE_PRIVATE);
+    private User getCurrentUserInfo() {
+        final SharedPreferences mPrefs = Objects.requireNonNull(getActivity()).getPreferences(getActivity().MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = mPrefs.getString("MyObject", "");
-        User obj = gson.fromJson(json, User.class);
+        String json = mPrefs.getString(Utils.CURRENT_USER_KEY, "");
+        return gson.fromJson(json, User.class);
     }
 
     @Override

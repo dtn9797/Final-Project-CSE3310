@@ -17,34 +17,28 @@ import android.widget.TextView;
 import com.example.duynguyen.sample.Model.FriendlyMessage;
 import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.utils.ChatAdapter;
+import com.example.duynguyen.sample.utils.Utils;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class ChatActivity extends AppCompatActivity {
-    public String MESSAGES_CHILD = "messages";
-    public String ANNOUNCEMENT_CHANNEL_CHILD = "announcement";
-    public String PRIVATE_CHANNEL_CHILD = "privates";
 
     public static String CLASS_ID_EXTRA = "classid";
     public static String KEY_ID_EXTRA = "keyid";
     public static String USER_TYPE_EXTRA = "userid";
 
     //these below variables are for setting private/ announcement chat room w/ teacher & user id
-    public String mUserType = "teacher";
+    public String mUserType;
     public boolean mAnnouncChannel = false;
-    public String mClassId ;
-    public String mParentId = "parentid2";
-    //if user is a parent, get teacher info first before go to chat activity
-    public String mTeacherId = "teacherid0";
+    public String mClassId;
+    public String mParentId;
 
     private DatabaseReference mRef, mNotificationRef;
     private ChatAdapter mFirebaseAdapter;
@@ -72,7 +66,10 @@ public class ChatActivity extends AppCompatActivity {
         mClassId = intent.getStringExtra(CLASS_ID_EXTRA);
         mUserType = intent.getStringExtra(USER_TYPE_EXTRA);
         String key = intent.getStringExtra(KEY_ID_EXTRA);
-        if (key.equals(ANNOUNCEMENT_CHANNEL_CHILD)) mAnnouncChannel = true;
+        if (key.equals(Utils.ANNOUNCEMENT_CHILD)) mAnnouncChannel = true;
+        else {
+            mParentId = key;
+        }
 
         setUpView();
     }
@@ -81,8 +78,8 @@ public class ChatActivity extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference();
         mNotificationRef = mRef.child("notifications");
 
-        final String messPath = ((mAnnouncChannel) ? MESSAGES_CHILD + "/" + mClassId + "/" + ANNOUNCEMENT_CHANNEL_CHILD
-                : MESSAGES_CHILD + "/" + mClassId + "/" + (mTeacherId + "+" + mParentId));
+        final String messPath = ((mAnnouncChannel) ? Utils.MESSAGES_CHILD + "/" + mClassId + "/" + Utils.ANNOUNCEMENT_CHILD
+                : Utils.MESSAGES_CHILD + "/" + mClassId + "/" + mParentId);
 
         SnapshotParser<FriendlyMessage> parser = new SnapshotParser<FriendlyMessage>() {
             @NonNull
@@ -140,11 +137,11 @@ public class ChatActivity extends AppCompatActivity {
                 mRef.child(messPath)
                         .push().setValue(friendlyMessage);
 
-                //need to change it later
-                HashMap<String, String> notMap = new HashMap<>();
-                notMap.put("from", mTeacherId);
-                notMap.put("type", "announcment");
-                mNotificationRef.child(mClassId).push().setValue(notMap);
+//                //need to change it later
+//                HashMap<String, String> notMap = new HashMap<>();
+//                notMap.put("from", mTeacherId);
+//                notMap.put("type", "announcment");
+                mNotificationRef.child(mClassId).child(Utils.ANNOUNCEMENT_CHILD + mClassId).setValue("");
 
                 messageEt.setText("");
             }

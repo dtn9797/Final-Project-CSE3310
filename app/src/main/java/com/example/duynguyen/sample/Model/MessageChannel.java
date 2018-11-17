@@ -3,32 +3,51 @@ package com.example.duynguyen.sample.Model;
 import java.util.List;
 
 public class MessageChannel {
-    private String channelType ;
+    private String parentName;
+    private String studentName;
+    private String teacherName;
+    private String id;
 
 
-    List<FriendlyMessage> messages;
+    public MessageChannel(String parentName, String studentName, String teacherName,String id) {
+        this.parentName = parentName;
+        this.studentName = studentName;
+        this.teacherName = teacherName;
+        this.id = id;
+    }
 
-    public MessageChannel(String channelType,List<FriendlyMessage> messages) {
-        this.messages = messages;
-        this.channelType = channelType;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public MessageChannel() {
     }
 
-    public List<FriendlyMessage> getMessages() {
-        return messages;
+    public String getParentName() {
+        return parentName;
     }
 
-    public void setMessages(List<FriendlyMessage> messages) {
-        this.messages = messages;
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
     }
 
-    public String getChannelType() {
-        return channelType;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setChannelType(String channelType) {
-        this.channelType = channelType;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 }

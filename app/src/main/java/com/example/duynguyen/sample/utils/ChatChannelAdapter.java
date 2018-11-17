@@ -1,15 +1,16 @@
 package com.example.duynguyen.sample.utils;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.duynguyen.sample.Model.MessageChannel;
 import com.example.duynguyen.sample.R;
+import com.example.duynguyen.sample.model.User;
 
 import java.util.ArrayList;
 
@@ -19,21 +20,21 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.ChatChannelVH> {
 
-    Context mContext;
-    ArrayList<String> mData = new ArrayList<>();
+    ArrayList<MessageChannel> mData = new ArrayList<>();
+    User mCurrentUser;
     protected static ItemListener mItemListener;
 
 
-    public ChatChannelAdapter(Context mContext, ArrayList<String> mData, ItemListener itemListener) {
-        this.mContext = mContext;
+    public ChatChannelAdapter(User mCurrentUser, ArrayList<MessageChannel> mData, ItemListener itemListener) {
         this.mData = mData;
+        this.mCurrentUser = mCurrentUser;
         this.mItemListener = itemListener;
     }
 
     public interface ItemListener {
         void onChannelClick(String key);
     }
-    public void setmData(ArrayList<String> data ){
+    public void setmData(ArrayList<MessageChannel> data ){
         mData = data;
         notifyDataSetChanged();
     }
@@ -61,6 +62,8 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
 
     public class ChatChannelVH extends RecyclerView.ViewHolder implements View.OnClickListener {
         String mKey;
+        String mUserType;
+        String mCurrentUserId;
 
         @BindView(R.id.chat_channel_name_tv)
         TextView nameTv;
@@ -68,11 +71,16 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
         TextView infoTv;
         @BindView(R.id.chat_channel_civ)
         CircleImageView civ;
+        @BindView(R.id.chat_channel_ll)
+        LinearLayout chatChannelLl;
 
         public ChatChannelVH(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
             itemView.setOnClickListener(this);
+
+            mUserType = mCurrentUser.getUserType();
+            mCurrentUserId = mCurrentUser.getfUserId();
         }
 
 
@@ -81,14 +89,29 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
             ChatChannelAdapter.mItemListener.onChannelClick(mKey);
         }
 
-        public void setData(String key) {
-            mKey = key;
-            if (mKey.equals("announcement")){
+        public void setData(MessageChannel messageChannel) {
+            mKey = messageChannel.getId();
 
-            }else {
+            if (mKey.equals(Utils.ANNOUNCEMENT_CHILD )&&mUserType.equals(Utils.PARENT)){
+                civ.setImageResource(R.drawable.announcement);
+                infoTv.setText("Announcement from teacher");
+            }else if (mKey.equals(mCurrentUserId)&&mUserType.equals(Utils.PARENT)) {
+                civ.setImageResource(R.drawable.teacher);
+                nameTv.setText(messageChannel.getTeacherName());
+                infoTv.setText("Teacher");
+            }
+            else if (mKey.equals(Utils.ANNOUNCEMENT_CHILD ) && mUserType.equals(Utils.TEACHER)){
+                civ.setImageResource(R.drawable.announcement);
+                infoTv.setText("Announcement to all parents");
+            }
+            else if (!mKey.equals(Utils.ANNOUNCEMENT_CHILD ) && mUserType.equals(Utils.TEACHER)) {
                 civ.setImageResource(R.drawable.parent);
-                nameTv.setText("Parent Name");
-                infoTv.setText("This is private chat");
+                nameTv.setText(messageChannel.getParentName());
+                infoTv.setText(messageChannel.getStudentName()+"'s parent");
+            }
+            else {
+                chatChannelLl.setVisibility(LinearLayout.GONE);
+                chatChannelLl.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
             }
         }
     }
