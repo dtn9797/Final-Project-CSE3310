@@ -91,8 +91,8 @@ public class ChatActivity extends AppCompatActivity {
         mNotificationRef = mRef.child("notifications");
 
         //A path for storing messages
-        final String messPath = ((mAnnouncChannel) ? Utils.MESSAGES_CHILD + "/" + mClassId + "/" + Utils.ANNOUNCEMENT_CHILD+"/"+Utils.MESSAGES_CHILD
-                : Utils.MESSAGES_CHILD + "/" + mClassId + "/" + mParentId+"/"+Utils.MESSAGES_CHILD);
+        final String messPath = ((mAnnouncChannel) ? Utils.MESSAGES_CHILD + "/" + mClassId + "/" + Utils.ANNOUNCEMENT_CHILD+"/"+Utils.CONVERSATION_CHILD
+                : Utils.MESSAGES_CHILD + "/" + mClassId + "/" + mParentId+"/"+Utils.CONVERSATION_CHILD);
 
         SnapshotParser<FriendlyMessage> parser = new SnapshotParser<FriendlyMessage>() {
             @NonNull
@@ -154,7 +154,7 @@ public class ChatActivity extends AppCompatActivity {
 //                HashMap<String, String> notMap = new HashMap<>();
 //                notMap.put("from", mTeacherId);
 //                notMap.put("type", "announcment");
-                mNotificationRef.child(mClassId).child(Utils.ANNOUNCEMENT_CHILD + mClassId).setValue("");
+                mNotificationRef.child(mClassId).child(Utils.ANNOUNCEMENT_CHILD + mClassId).push().setValue("");
 
                 messageEt.setText("");
             }

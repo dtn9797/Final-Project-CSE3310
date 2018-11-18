@@ -28,17 +28,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 remoteMessage.getNotification());
         Log.d(TAG, "FCM Data Message: " + remoteMessage.getData());
 
-        String contextText = remoteMessage.getData().get("score");
-        iniNotification( contextText);
+        createNotificationChannel();
+
+        String title = remoteMessage.getData().get("title");
+        String subtitle = remoteMessage.getData().get("subtitle");
+        iniNotification( title, subtitle);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
         int mNotificationID = (int)System.currentTimeMillis();
         notificationManager.notify(mNotificationID, mBuilder.build());
 //        iniNotification();
-//        createNotificationChannel();
+
 
     }
 
-    private void iniNotification(String contextTxt) {
+    private void iniNotification(String title, String subtitle) {
         // Create an explicit intent for an Activity in your app
         Intent intent = new Intent(this, ChatActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -46,8 +49,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_arrow_back_white_24dp)
-                .setContentTitle("Title")
-                .setContentText(contextTxt)
+                .setContentTitle(title)
+                .setContentText(subtitle)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);

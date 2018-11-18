@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import java.util.Objects;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FirebaseAuth mAuth;
     DatabaseReference mDatabase;
     String mCurrentUserId;
+    String mClassId;
+    User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         storeInfoLocally();
 
 
+
     }
 
 
@@ -56,14 +60,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDatabase.child(Utils.USERS_CHILD).child(mCurrentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                String json = gson.toJson(user);
+                mUser = dataSnapshot.getValue(User.class);
+                String json = gson.toJson(mUser);
                 prefsEditor.putString(Utils.CURRENT_USER_KEY, json);
                 prefsEditor.apply();
 
+                mClassId = mUser.getClassId();
+                //subscribe to announcement topic
+                if(mUser.getUserType().equals(Utils.PARENT)) {
+                    FirebaseMessaging.getInstance().subscribeToTopic(Utils.ANNOUNCEMENT_CHILD + mClassId);
+                }
 
                 DatabaseReference classRef = FirebaseDatabase.getInstance().getReference().child(Utils.CLASSES_CHILD).
-                        child(user.getClassId());
+                        child(mUser.getClassId());
                 classRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -149,6 +158,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_logout:
+                if(mUser.getUserType().equals(Utils.PARENT)) {
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Utils.ANNOUNCEMENT_CHILD + mClassId);
+                }
                 mAuth.signOut();
                 finish();
 
