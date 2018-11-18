@@ -43,7 +43,7 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
 
     private String mUserType ;
     private String mClassId ;
-    private ArrayList<com.example.duynguyen.sample.Model.MessageChannel> mMesChannelKeys = new ArrayList<>();
+    private ArrayList<com.example.duynguyen.sample.Model.MessageChannel> mMesChannels = new ArrayList<>();
     private ChatChannelAdapter mChatChannelAdapter;
 
 
@@ -60,7 +60,7 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
         inniMessChan();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        mChatChannelAdapter = new ChatChannelAdapter(currentUser, mMesChannelKeys, this);
+        mChatChannelAdapter = new ChatChannelAdapter(currentUser, mMesChannels, this);
         chatChannelRv.setAdapter(mChatChannelAdapter);
         chatChannelRv.setLayoutManager(linearLayoutManager);
 
@@ -73,12 +73,12 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        mMesChannelKeys = new ArrayList<>();
+                        mMesChannels = new ArrayList<>();
                         for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                             com.example.duynguyen.sample.Model.MessageChannel messageChannel  = postSnapshot.getValue(com.example.duynguyen.sample.Model.MessageChannel.class);
-                            mMesChannelKeys.add(messageChannel);
+                            mMesChannels.add(messageChannel);
                         }
-                        mChatChannelAdapter.setmData(mMesChannelKeys);
+                        mChatChannelAdapter.setmData(mMesChannels);
 
                     }
 
@@ -130,12 +130,16 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
         return gson.fromJson(json, User.class);
     }
 
+
     @Override
-    public void onChannelClick(String key) {
+    public void onChannelClick(String key, int profileImageRes, String receiverName, String channelInfo) {
         Intent intent = new Intent(getActivity(),ChatActivity.class);
         intent.putExtra(ChatActivity.CLASS_ID_EXTRA,mClassId);
         intent.putExtra(ChatActivity.KEY_ID_EXTRA,key);
         intent.putExtra(ChatActivity.USER_TYPE_EXTRA,mUserType);
+        intent.putExtra(ChatActivity.PROFILE_PIC_EXTRA, profileImageRes);
+        intent.putExtra(ChatActivity.RECEVIER_NAME_EXRTA,receiverName);
+        intent.putExtra(ChatActivity.CHANNEL_INFO_EXTRA,channelInfo);
         startActivity(intent);
     }
 }

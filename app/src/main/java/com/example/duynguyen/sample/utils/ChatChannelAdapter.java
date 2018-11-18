@@ -32,7 +32,7 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
     }
 
     public interface ItemListener {
-        void onChannelClick(String key);
+        void onChannelClick(String key, int profileImageRes, String receiverName,String channelInfo);
     }
     public void setmData(ArrayList<MessageChannel> data ){
         mData = data;
@@ -64,6 +64,9 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
         String mKey;
         String mUserType;
         String mCurrentUserId;
+        String mReceiverName;
+        String mChannelInfo;
+        int mProfileImageRes;
 
         @BindView(R.id.chat_channel_name_tv)
         TextView nameTv;
@@ -86,33 +89,42 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
 
         @Override
         public void onClick(View v) {
-            ChatChannelAdapter.mItemListener.onChannelClick(mKey);
+            ChatChannelAdapter.mItemListener.onChannelClick(mKey,mProfileImageRes,mReceiverName,mChannelInfo);
         }
 
         public void setData(MessageChannel messageChannel) {
             mKey = messageChannel.getId();
 
             if (mKey.equals(Utils.ANNOUNCEMENT_CHILD )&&mUserType.equals(Utils.PARENT)){
-                civ.setImageResource(R.drawable.announcement);
-                infoTv.setText("Announcement from teacher");
+                mReceiverName = "Annoucement";
+                mChannelInfo = "Announcement from teacher";
+                mProfileImageRes = R.drawable.announcement;
+
             }else if (mKey.equals(mCurrentUserId)&&mUserType.equals(Utils.PARENT)) {
-                civ.setImageResource(R.drawable.teacher);
-                nameTv.setText(messageChannel.getTeacherName());
-                infoTv.setText("Teacher");
+                mReceiverName = messageChannel.getTeacherName();
+                mChannelInfo = "Teacher";
+                mProfileImageRes = R.drawable.teacher;
+
             }
             else if (mKey.equals(Utils.ANNOUNCEMENT_CHILD ) && mUserType.equals(Utils.TEACHER)){
-                civ.setImageResource(R.drawable.announcement);
-                infoTv.setText("Announcement to all parents");
+                mReceiverName = "Annoucement";
+                mChannelInfo = "Announcement to all parents";
+                mProfileImageRes = R.drawable.announcement;
+
             }
             else if (!mKey.equals(Utils.ANNOUNCEMENT_CHILD ) && mUserType.equals(Utils.TEACHER)) {
-                civ.setImageResource(R.drawable.parent);
-                nameTv.setText(messageChannel.getParentName());
-                infoTv.setText(messageChannel.getStudentName()+"'s parent");
+                mReceiverName = messageChannel.getParentName();
+                mChannelInfo = messageChannel.getStudentName()+"'s parent";
+                mProfileImageRes = R.drawable.parent;
             }
             else {
                 chatChannelLl.setVisibility(LinearLayout.GONE);
                 chatChannelLl.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
             }
+
+            nameTv.setText(mReceiverName);
+            infoTv.setText(mChannelInfo);
+            civ.setImageResource(mProfileImageRes);
         }
     }
 }

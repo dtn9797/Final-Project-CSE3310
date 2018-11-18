@@ -33,12 +33,19 @@ public class ChatActivity extends AppCompatActivity {
     public static String CLASS_ID_EXTRA = "classid";
     public static String KEY_ID_EXTRA = "keyid";
     public static String USER_TYPE_EXTRA = "userid";
+    public static String RECEVIER_NAME_EXRTA = "name";
+    public static String CHANNEL_INFO_EXTRA = "info";
+    public static String PROFILE_PIC_EXTRA = "pro";
+
 
     //these below variables are for setting private/ announcement chat room w/ teacher & user id
     public String mUserType;
     public boolean mAnnouncChannel = false;
     public String mClassId;
     public String mParentId;
+    public String mReceiverName;
+    public int mProfilePicRes;
+    public String mChanelInfo;
 
     private DatabaseReference mRef, mNotificationRef;
     private ChatAdapter mFirebaseAdapter;
@@ -62,10 +69,15 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
 
+        //get values from intent and set if it is announcement or private type
         Intent intent = getIntent();
         mClassId = intent.getStringExtra(CLASS_ID_EXTRA);
         mUserType = intent.getStringExtra(USER_TYPE_EXTRA);
         String key = intent.getStringExtra(KEY_ID_EXTRA);
+        mReceiverName = intent.getStringExtra(RECEVIER_NAME_EXRTA);
+        mChanelInfo = intent.getStringExtra(CHANNEL_INFO_EXTRA);
+        mProfilePicRes = intent.getIntExtra(PROFILE_PIC_EXTRA,-1);
+
         if (key.equals(Utils.ANNOUNCEMENT_CHILD)) mAnnouncChannel = true;
         else {
             mParentId = key;
@@ -78,8 +90,9 @@ public class ChatActivity extends AppCompatActivity {
         mRef = FirebaseDatabase.getInstance().getReference();
         mNotificationRef = mRef.child("notifications");
 
-        final String messPath = ((mAnnouncChannel) ? Utils.MESSAGES_CHILD + "/" + mClassId + "/" + Utils.ANNOUNCEMENT_CHILD
-                : Utils.MESSAGES_CHILD + "/" + mClassId + "/" + mParentId);
+        //A path for storing messages
+        final String messPath = ((mAnnouncChannel) ? Utils.MESSAGES_CHILD + "/" + mClassId + "/" + Utils.ANNOUNCEMENT_CHILD+"/"+Utils.MESSAGES_CHILD
+                : Utils.MESSAGES_CHILD + "/" + mClassId + "/" + mParentId+"/"+Utils.MESSAGES_CHILD);
 
         SnapshotParser<FriendlyMessage> parser = new SnapshotParser<FriendlyMessage>() {
             @NonNull
@@ -124,7 +137,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 //        Need to set up profile tv and iv
-        if (mUserType.equals("parent") && mAnnouncChannel) {
+        if (mUserType.equals(Utils.PARENT) && mAnnouncChannel) {
             sendBtn.setEnabled(false);
         }
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +167,10 @@ public class ChatActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        //populate toolbar view
+        profileIv.setImageResource(mProfilePicRes);
+        profileTv.setText(mReceiverName);
     }
 
     @Override
