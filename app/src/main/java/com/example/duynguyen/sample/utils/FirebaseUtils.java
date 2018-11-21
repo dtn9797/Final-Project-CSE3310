@@ -38,7 +38,7 @@ public class FirebaseUtils {
             }
         });
         //add student id in class
-        database.child(Utils.CLASSES_CHILD).child(classId).child(Utils.STUDENTS_CHILD).child(student.getfUserId()).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+        database.child(Utils.CLASSES_CHILD).child(classId).child(Utils.STUDENTS_CHILD).child(student.getfUserId()).setValue(student.getfUserId()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(context, "Added Student successfully in their classes",Toast.LENGTH_SHORT).show();
@@ -65,7 +65,7 @@ public class FirebaseUtils {
             }
         });
         //add parent id in class
-        classRef.child(classId).child(Utils.PARENTS_CHILD).child(parent.getfUserId()).setValue(true).addOnCompleteListener(new OnCompleteListener<Void>() {
+        classRef.child(classId).child(Utils.PARENTS_CHILD).child(parent.getfUserId()).setValue(parent.getfUserId()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(context, "Added Parent successfully in their classes",Toast.LENGTH_SHORT).show();
