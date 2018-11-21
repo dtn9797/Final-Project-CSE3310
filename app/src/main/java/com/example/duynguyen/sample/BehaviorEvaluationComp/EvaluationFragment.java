@@ -1,5 +1,6 @@
 package com.example.duynguyen.sample.BehaviorEvaluationComp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,18 +16,29 @@ import android.widget.Spinner;
 
 import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.model.Student;
+import com.example.duynguyen.sample.model.User;
+import com.example.duynguyen.sample.utils.Utils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class EvaluationFragment extends Fragment {
 
-    private String mClassId ="";
-    private DatabaseReference mClassRef;
+    private User mCurrentUser ;
+    private DatabaseReference mRef;
+    private EvaluationAdapter mEvalAdap;
 
     private List<com.example.duynguyen.sample.model.Student> mStudents = new ArrayList<>();
 
@@ -42,6 +54,7 @@ public class EvaluationFragment extends Fragment {
         ButterKnife.bind(this,view);
 
         setUpView();
+        mRef = FirebaseDatabase.getInstance().getReference();
         getStudentsData();
 
 
@@ -51,9 +64,9 @@ public class EvaluationFragment extends Fragment {
 
     private void setUpView() {
         //RV
-        EvaluationAdapter evaluationAdapter = new EvaluationAdapter(getContext(),mStudents);
+        mEvalAdap = new EvaluationAdapter(getContext(),mStudents);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        evalRv.setAdapter(evaluationAdapter);
+        evalRv.setAdapter(mEvalAdap);
         evalRv.setLayoutManager(linearLayoutManager);
         //submit btn
         evalSubmitBtn.setOnClickListener(new View.OnClickListener() {
@@ -65,10 +78,44 @@ public class EvaluationFragment extends Fragment {
     }
 
     private void getStudentsData() {
-        com.example.duynguyen.sample.model.Student student0 = new Student("duy","nguyen","","","");
-        com.example.duynguyen.sample.model.Student student1 = new Student("duy","nguyen","","","");
-        mStudents.add(student0);
-        mStudents.add(student1);
+        //get from current user
+        mCurrentUser = getCurrentUserInfo();
+        String classId = mCurrentUser.getClassId();
+        DatabaseReference studentsRef = mRef.child(Utils.CLASSES_CHILD).child(classId).child(Utils.STUDENTS_CHILD);
+        studentsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<String> studentIds = new ArrayList<>();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    String studentId = snapshot.getValue(String.class);
+                    studentIds.add(studentId);
+                }
+                for (String studentId: studentIds){
+                    DatabaseReference studentRef = mRef.child(Utils.USERS_CHILD).child(studentId);
+                    studentRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Student student = dataSnapshot.getValue(Student.class);
+                            mStudents.add(student);
+                            mEvalAdap.setmData(mStudents);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void retriveStudentsData(){
@@ -81,5 +128,11 @@ public class EvaluationFragment extends Fragment {
             String text = "";
 
         }
+    }
+    private User getCurrentUserInfo() {
+        final SharedPreferences mPrefs = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString(Utils.CURRENT_USER_KEY, "");
+        return gson.fromJson(json, User.class);
     }
 }
