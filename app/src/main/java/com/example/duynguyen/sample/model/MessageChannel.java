@@ -1,9 +1,7 @@
-package com.example.duynguyen.sample.Model;
+package com.example.duynguyen.sample.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.List;
 
 public class MessageChannel implements Parcelable {
     private String parentName;

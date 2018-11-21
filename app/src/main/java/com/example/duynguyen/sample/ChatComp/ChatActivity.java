@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.duynguyen.sample.Model.FriendlyMessage;
+import com.example.duynguyen.sample.model.FriendlyMessage;
 import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.utils.ChatAdapter;
 import com.example.duynguyen.sample.utils.Utils;

@@ -42,4 +42,15 @@
     <string name="close">Close</string>
     <string name="announcement">Announcement</string>
     <string name="messages_will_be_sent_to_all_parents">Messages will be sent to all parents</string>
+
+    <string-array name="evaluations_array">
+        <item>Good</item>
+        <item>Bad</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+    </string-array>
 </resources>

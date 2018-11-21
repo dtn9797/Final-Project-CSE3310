@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@android:color/white">
-
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical">
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="For each student , check one status alomng.."/>
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/evaluation_rv"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/eval_submit_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Evaluation"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+        android:layout_margin="30dp"
+        android:layout_gravity="end"
+        android:text="Submit"/>
 
-</RelativeLayout>
+</LinearLayout>

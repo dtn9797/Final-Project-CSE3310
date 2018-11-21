@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.example.duynguyen.sample.BehaviorEvaluationComp.EvaluationFragment;
 import com.example.duynguyen.sample.ChatComp.ChatMenuFragment;
 import com.example.duynguyen.sample.model.ClassRoom;
 import com.example.duynguyen.sample.model.User;

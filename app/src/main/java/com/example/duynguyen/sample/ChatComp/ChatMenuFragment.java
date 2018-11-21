@@ -43,7 +43,7 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
 
     private String mUserType ;
     private String mClassId ;
-    private ArrayList<com.example.duynguyen.sample.Model.MessageChannel> mMesChannels = new ArrayList<>();
+    private ArrayList<com.example.duynguyen.sample.model.MessageChannel> mMesChannels = new ArrayList<>();
     private ChatChannelAdapter mChatChannelAdapter;
 
 
@@ -75,7 +75,7 @@ public class ChatMenuFragment extends Fragment implements ChatChannelAdapter.Ite
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         mMesChannels = new ArrayList<>();
                         for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                            com.example.duynguyen.sample.Model.MessageChannel messageChannel  = postSnapshot.getValue(com.example.duynguyen.sample.Model.MessageChannel.class);
+                            com.example.duynguyen.sample.model.MessageChannel messageChannel  = postSnapshot.getValue(com.example.duynguyen.sample.model.MessageChannel.class);
                             mMesChannels.add(messageChannel);
                         }
                         mChatChannelAdapter.setmData(mMesChannels);

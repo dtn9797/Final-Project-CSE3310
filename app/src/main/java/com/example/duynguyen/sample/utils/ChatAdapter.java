@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.duynguyen.sample.Model.FriendlyMessage;
+import com.example.duynguyen.sample.model.FriendlyMessage;
 import com.example.duynguyen.sample.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
