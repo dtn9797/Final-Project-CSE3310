@@ -1,13 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@android:color/white">
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
+    <ImageView
+        android:id="@+id/student_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Account"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:scaleType="center"
+        app:srcCompat="@mipmap/baseline_account_circle_black_48dp" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/studentName_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="studentName" />
+
+    <TextView
+        android:id="@+id/points_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="points" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/eval_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

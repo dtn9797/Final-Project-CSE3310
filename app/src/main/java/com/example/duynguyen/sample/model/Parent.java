@@ -8,6 +8,10 @@ import java.util.List;
 
 public class Parent extends User {
     private String studentId;
+
+    public Parent() {
+    }
+
     public Parent(String userType, String firstName, String lastName, String phoneNum, String loginId, String pass) {
         super(userType, firstName, lastName, phoneNum, loginId, pass);
     }
