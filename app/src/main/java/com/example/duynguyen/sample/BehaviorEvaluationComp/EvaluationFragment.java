@@ -13,19 +13,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.model.Student;
 import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.Utils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.example.duynguyen.sample.model.Evaluation;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -86,13 +95,14 @@ public class EvaluationFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<String> studentIds = new ArrayList<>();
+                mStudents = new ArrayList<>();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                     String studentId = snapshot.getValue(String.class);
                     studentIds.add(studentId);
                 }
                 for (String studentId: studentIds){
                     DatabaseReference studentRef = mRef.child(Utils.USERS_CHILD).child(studentId);
-                    studentRef.addValueEventListener(new ValueEventListener() {
+                    studentRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Student student = dataSnapshot.getValue(Student.class);
@@ -125,9 +135,34 @@ public class EvaluationFragment extends Fragment {
             String comment = commentEt.getText().toString();
             Spinner evalSpinner = view.findViewById(R.id.eval_spinner);
             String behavior = evalSpinner.getSelectedItem().toString();
-            String text = "";
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date today = new Date();
+            Date todayWithZeroTime = new Date();
+            try {
+                 todayWithZeroTime = formatter.parse(formatter.format(today));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            String date =  todayWithZeroTime.toString();
 
+            String currentStuId = mStudents.get(i).getfUserId();
+            final Evaluation evaluation = new Evaluation(behavior,comment,date);
+            //Add evaluation to database.
+            DatabaseReference evaluationRef = mRef.child(Utils.USERS_CHILD).child(currentStuId).child(Utils.EVALUATIONS_CHILD);
+            final int maxIndex = mStudents.size()-1;
+            final int currentIndex = i;
+            evaluationRef.push().setValue(evaluation).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (currentIndex == maxIndex )
+                    Toast.makeText(getContext(),"Evaluation sent.",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
+        //Add notification
+        String evaluationNotChild = Utils.EVALUATION_CHILD+mCurrentUser.getClassId();
+        mRef.child(Utils.NOTIFICATIONS_CHILD).child(mCurrentUser.getClassId()).child(evaluationNotChild).push().setValue("");
+
     }
     private User getCurrentUserInfo() {
         final SharedPreferences mPrefs = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);

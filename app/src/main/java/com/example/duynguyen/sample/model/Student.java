@@ -2,7 +2,21 @@ package com.example.duynguyen.sample.model;
 
 import com.example.duynguyen.sample.utils.Utils;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class Student extends com.example.duynguyen.sample.model.User {
+    HashMap<String,Evaluation> evaluations;
+
+
+    public HashMap<String, Evaluation> getEvaluations() {
+        return evaluations;
+    }
+
+    public void setEvaluations(HashMap<String, Evaluation> evaluations) {
+        this.evaluations = evaluations;
+    }
+
     public Student() {
     }
 

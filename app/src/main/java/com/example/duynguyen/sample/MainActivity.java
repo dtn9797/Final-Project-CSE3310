@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //subscribe to announcement topic
                 if(mUser.getUserType().equals(Utils.PARENT)) {
                     FirebaseMessaging.getInstance().subscribeToTopic(Utils.ANNOUNCEMENT_CHILD + mClassId);
+                    FirebaseMessaging.getInstance().subscribeToTopic(Utils.EVALUATION_CHILD+ mClassId);
                 }
 
                 DatabaseReference classRef = FirebaseDatabase.getInstance().getReference().child(Utils.CLASSES_CHILD).
@@ -159,8 +160,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
 
             case R.id.nav_logout:
+                //Unsubscribe to topic
                 if(mUser.getUserType().equals(Utils.PARENT)) {
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(Utils.ANNOUNCEMENT_CHILD + mClassId);
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(Utils.EVALUATION_CHILD + mClassId);
                 }
                 mAuth.signOut();
                 finish();
