@@ -119,7 +119,7 @@ public class AccountFragment extends Fragment {
         ptsTv.setText("1000 points");
         //populate Iv later
         HashMap<String, Evaluation> evaluationHashMap = mStudent.getEvaluations();
-        if(evaluationHashMap!=null) {
+        if (evaluationHashMap != null) {
             List<Evaluation> evaluations = new ArrayList<>(evaluationHashMap.values());
             //set up recycler view
             mAEAdapter.setEvaluations(evaluations);

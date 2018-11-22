@@ -5,7 +5,7 @@ public class Utils {
 	//Email Validation pattern
 	public static final String emailRegEx = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}\\b";
 	//Username Validation pattern
-	public static final String userNameRegEx = "[a-zA-Z0-9._]";
+	public static final String userNameRegEx = "[a-zA-Z0-9]*";
 	//StudentKey
     public static final String studentKeyRegEx = "myStudent[0-9]{5,5}[a-zA-Z0-9._]*";
 
