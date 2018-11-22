@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.model.CloudImage;
@@ -38,10 +39,15 @@ public class RewardsFragment extends Fragment {
 
     @BindView(R.id.reward_rv)
     RecyclerView rewardRv;
+    @BindView(R.id.add_reward_pts_rv)
+    RecyclerView addPointsRv;
 
     private User mCurrentUser;
     private RewardItemsAdapter mRIAdapter;
     private DatabaseReference mRef;
+    private List<Student> mStudents= new ArrayList<>();
+    private AddRewardPtsAdapter mARPAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,11 +56,16 @@ public class RewardsFragment extends Fragment {
 
         //set Fb
         mRef = FirebaseDatabase.getInstance().getReference();
-        //setup Rv
+        //setup Rv for student type
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
         mRIAdapter = new RewardItemsAdapter(getContext());
         rewardRv.setAdapter(mRIAdapter);
         rewardRv.setLayoutManager(gridLayoutManager);
+        //setupRv for teacher type
+        mARPAdapter = new AddRewardPtsAdapter(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        addPointsRv.setAdapter(mARPAdapter);
+        addPointsRv.setLayoutManager(linearLayoutManager);
 
         setUpview();
 
@@ -82,7 +93,7 @@ public class RewardsFragment extends Fragment {
         }
         //if current username is teacher
         else {
-
+            getStudentsData();
         }
 
     }
@@ -93,5 +104,47 @@ public class RewardsFragment extends Fragment {
         Gson gson = new Gson();
         String json = mPrefs.getString(Utils.CURRENT_USER_KEY, "");
         return gson.fromJson(json, User.class);
+    }
+
+    private void getStudentsData() {
+        //get from current user
+        mCurrentUser = getCurrentUserInfo();
+        String classId = mCurrentUser.getClassId();
+        DatabaseReference studentsRef = mRef.child(Utils.CLASSES_CHILD).child(classId).child(Utils.STUDENTS_CHILD);
+        studentsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<String> studentIds = new ArrayList<>();
+                mStudents = new ArrayList<>();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    String studentId = snapshot.getValue(String.class);
+                    studentIds.add(studentId);
+                }
+                for (String studentId: studentIds){
+                    DatabaseReference studentRef = mRef.child(Utils.USERS_CHILD).child(studentId);
+                    studentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Student student = dataSnapshot.getValue(Student.class);
+                            mStudents.add(student);
+                            mARPAdapter.setmStudents(mStudents);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }

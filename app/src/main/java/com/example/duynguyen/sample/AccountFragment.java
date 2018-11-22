@@ -57,7 +57,7 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_account, container, false);
-        ;
+
         ButterKnife.bind(this, view);
 
         //setup RecyclerView
@@ -99,7 +99,7 @@ public class AccountFragment extends Fragment {
 
                 }
             });
-        } else {
+        } else if (currentUser.getUserType().equals(Utils.STUDENT)) {
             mRef.child(Utils.USERS_CHILD).child(currentUser.getfUserId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
