@@ -21,7 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class FirebaseUtils {
@@ -33,13 +35,13 @@ public class FirebaseUtils {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         student.setfUserId(auth.getCurrentUser().getUid());
         //populate reward items and profile images
-        HashMap<String,CloudImage> rewardItems = new HashMap<>();
+        List<CloudImage> rewardItems = new ArrayList<>();
         for (int i = 1; i<6;i++){
-            rewardItems.put(Integer.toString(i),new CloudImage(i));
+            rewardItems.add(new CloudImage(i));
         }
         student.setRewardPics(rewardItems);
-        HashMap<String,CloudImage> profilePics = new HashMap<>();
-        profilePics.put("0",new CloudImage(6));
+        List<CloudImage> profilePics = new ArrayList<>();
+        profilePics.add(new CloudImage(1));
         student.setProfilePics(profilePics);
         //add student id in users
         database.child(Utils.USERS_CHILD).child(student.getfUserId()).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {

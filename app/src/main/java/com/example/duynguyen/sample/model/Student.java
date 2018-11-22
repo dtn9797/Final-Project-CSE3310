@@ -7,29 +7,28 @@ import java.util.List;
 
 public class Student extends com.example.duynguyen.sample.model.User {
     HashMap<String,Evaluation> evaluations;
-    HashMap<String,CloudImage> profilePics;
-    HashMap<String,CloudImage> rewardPics;
+    List<CloudImage> profilePics;
+    List<CloudImage> rewardPics;
     int rewardPts;
 
-
-    public HashMap<String, Evaluation> getEvaluations() {
-        return evaluations;
-    }
-
-    public HashMap<String, CloudImage> getProfilePics() {
+    public List<CloudImage> getProfilePics() {
         return profilePics;
     }
 
-    public void setProfilePics(HashMap<String, CloudImage> profilePics) {
+    public void setProfilePics(List<CloudImage> profilePics) {
         this.profilePics = profilePics;
     }
 
-    public HashMap<String, CloudImage> getRewardPics() {
+    public List<CloudImage> getRewardPics() {
         return rewardPics;
     }
 
-    public void setRewardPics(HashMap<String, CloudImage> rewardPics) {
+    public void setRewardPics(List<CloudImage> rewardPics) {
         this.rewardPics = rewardPics;
+    }
+
+    public HashMap<String, Evaluation> getEvaluations() {
+        return evaluations;
     }
 
     public int getRewardPts() {

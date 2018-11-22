@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 import com.example.duynguyen.sample.BehaviorEvaluationComp.EvaluationFragment;
 import com.example.duynguyen.sample.ChatComp.ChatMenuFragment;
+import com.example.duynguyen.sample.RewardComp.RewardsFragment;
 import com.example.duynguyen.sample.model.ClassRoom;
 import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.Utils;

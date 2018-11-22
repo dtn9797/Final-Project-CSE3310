@@ -2,10 +2,27 @@ package com.example.duynguyen.sample.model;
 
 public class CloudImage {
     String url;
+    String name;
     Boolean enable;
     int pts;
 
     public CloudImage() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPts() {
+        return pts;
+    }
+
+    public void setPts(int pts) {
+        this.pts = pts;
     }
 
     public CloudImage(int i) {
