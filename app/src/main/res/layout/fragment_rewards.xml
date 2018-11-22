@@ -12,5 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <Button
+        android:id="@+id/send_pts_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="243dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="220dp"
+        android:background="@color/colorAccent"
+        android:text="Send Reward Points" />
+
 
 </RelativeLayout>

@@ -11,12 +11,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.duynguyen.sample.R;
 import com.example.duynguyen.sample.model.CloudImage;
 import com.example.duynguyen.sample.model.Student;
 import com.example.duynguyen.sample.model.User;
+import com.example.duynguyen.sample.utils.FirebaseUtils;
 import com.example.duynguyen.sample.utils.Utils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +46,8 @@ public class RewardsFragment extends Fragment {
     RecyclerView rewardRv;
     @BindView(R.id.add_reward_pts_rv)
     RecyclerView addPointsRv;
+    @BindView(R.id.send_pts_btn)
+    Button sendPtsBtn;
 
     private User mCurrentUser;
     private RewardItemsAdapter mRIAdapter;
@@ -76,6 +83,8 @@ public class RewardsFragment extends Fragment {
         mCurrentUser = getCurrentUserInfo();
         String userType = mCurrentUser.getUserType();
         if (userType.equals(Utils.STUDENT)) {
+            sendPtsBtn.setVisibility(View.GONE);
+
             mRef.child(Utils.USERS_CHILD).child(mCurrentUser.getfUserId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -94,8 +103,30 @@ public class RewardsFragment extends Fragment {
         //if current username is teacher
         else {
             getStudentsData();
+            sendPtsBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    updateStudentsPts();
+                    Toast.makeText(getContext(),"Sent Reward Points",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
+    }
+
+    private void updateStudentsPts() {
+        for (int i = 0; i < mStudents.size(); i++) {
+            View view = addPointsRv.getChildAt(i);
+            Spinner spinner = view.findViewById(R.id.pts_spinner);
+            int currentPts = Integer.parseInt(spinner.getSelectedItem().toString());
+            if(currentPts != 0){
+                Student currentStudent = mStudents.get(i);
+                int totalPts = currentStudent.getRewardPts()+ currentPts;
+                currentStudent.setRewardPts(totalPts);
+
+                FirebaseUtils.updateStudentInfo(currentStudent);
+            }
+        }
     }
 
 
