@@ -52,7 +52,7 @@ public class RewardsFragment extends Fragment {
         mRef = FirebaseDatabase.getInstance().getReference();
         //setup Rv
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
-        mRIAdapter = new RewardItemsAdapter();
+        mRIAdapter = new RewardItemsAdapter(getContext());
         rewardRv.setAdapter(mRIAdapter);
         rewardRv.setLayoutManager(gridLayoutManager);
 
@@ -69,8 +69,9 @@ public class RewardsFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Student student = dataSnapshot.getValue(Student.class);
+                    assert student != null;
                     List<CloudImage> rewardItems = student.getRewardPics();
-                    mRIAdapter.setmRewardItems(rewardItems);
+                    mRIAdapter.setmRewardItems(rewardItems,student);
                 }
 
                 @Override

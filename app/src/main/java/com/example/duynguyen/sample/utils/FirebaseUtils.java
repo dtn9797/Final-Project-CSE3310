@@ -1,6 +1,8 @@
 package com.example.duynguyen.sample.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,11 +22,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FirebaseUtils {
 
@@ -198,5 +203,35 @@ public class FirebaseUtils {
         classRef.child(classRoom.getClassId()).setValue(classRoom);
 
     }
+
+    //RewardItems Adapter
+    public static void updateStudentInfo(Student student ){
+        String studentPath = Utils.USERS_CHILD+"/"+student.getfUserId();
+        DatabaseReference studentRef = FirebaseDatabase.getInstance().getReference().child(studentPath);
+        studentRef.setValue(student);
+    }
+
+    public static void addProfilePic(Student student, CloudImage newProfilePic){
+        String studentPath = Utils.USERS_CHILD+"/"+student.getfUserId();
+        DatabaseReference studentRef = FirebaseDatabase.getInstance().getReference().child(studentPath);
+
+        List<CloudImage> currentProfilePics = student.getProfilePics();
+        //set all cloudImage to false
+        for (CloudImage profilePic: currentProfilePics){
+            profilePic.setEnable(false);
+        }
+        currentProfilePics.add(newProfilePic);
+        student.setProfilePics(currentProfilePics);
+
+        studentRef.setValue(student);
+    }
+
+    public static void updateRewardItems (Student student, List<CloudImage> newRewardItems){
+        String studentPath = Utils.USERS_CHILD+"/"+student.getfUserId();
+        DatabaseReference studentRef = FirebaseDatabase.getInstance().getReference().child(studentPath);
+        studentRef.setValue(student);
+
+    }
+
 }
 

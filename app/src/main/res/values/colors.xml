@@ -6,7 +6,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="black">#000000</color>
-    <color name="button_selectorcolor">#9E9E9E</color>
+    <color name="grey">#9E9E9E</color>
 
     <!--//Login Screen-->
     <color name="white_greyish">#EEEEEE</color>
