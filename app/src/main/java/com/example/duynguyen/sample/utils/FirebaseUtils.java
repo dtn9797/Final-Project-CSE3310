@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.duynguyen.sample.model.ClassRoom;
+import com.example.duynguyen.sample.model.CloudImage;
 import com.example.duynguyen.sample.model.Parent;
 import com.example.duynguyen.sample.model.Student;
 import com.example.duynguyen.sample.model.Teacher;
@@ -20,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class FirebaseUtils {
@@ -30,6 +32,15 @@ public class FirebaseUtils {
         student.setClassId(classId);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         student.setfUserId(auth.getCurrentUser().getUid());
+        //populate reward items and profile images
+        HashMap<String,CloudImage> rewardItems = new HashMap<>();
+        for (int i = 1; i<6;i++){
+            rewardItems.put(Integer.toString(i),new CloudImage(i));
+        }
+        student.setRewardPics(rewardItems);
+        HashMap<String,CloudImage> profilePics = new HashMap<>();
+        profilePics.put("0",new CloudImage(6));
+        student.setProfilePics(profilePics);
         //add student id in users
         database.child(Utils.USERS_CHILD).child(student.getfUserId()).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -44,6 +55,7 @@ public class FirebaseUtils {
                 Toast.makeText(context, "Added Student successfully in their classes",Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
     }

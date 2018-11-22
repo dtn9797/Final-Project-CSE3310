@@ -6,10 +6,10 @@
 
     <ImageView
         android:id="@+id/student_iv"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:scaleType="center"
         app:srcCompat="@mipmap/baseline_account_circle_black_48dp" />
 

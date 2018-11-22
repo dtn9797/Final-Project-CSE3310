@@ -24,7 +24,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,6 +119,7 @@ public class AccountFragment extends Fragment {
         String studentName = mStudent.getFirstName() + " " + mStudent.getLastName();
         nameTv.setText(studentName);
         ptsTv.setText("1000 points");
+        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/my-student-152dc.appspot.com/o/rewardItems%2F1.png?alt=media&token=9a55a700-147c-4f7f-a756-20a890e54037").into(studentIv);
         //populate Iv later
         HashMap<String, Evaluation> evaluationHashMap = mStudent.getEvaluations();
         if (evaluationHashMap != null) {
