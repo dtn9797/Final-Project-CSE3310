@@ -9,6 +9,13 @@ public class CloudImage {
     public CloudImage() {
     }
 
+    public CloudImage(CloudImage cloudImage) {
+        this.url = cloudImage.getUrl();
+        this.name = cloudImage.getName();
+        this.enable = cloudImage.getEnable();
+        this.pts = cloudImage.getPts();
+    }
+
     public String getName() {
         return name;
     }

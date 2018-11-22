@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.duynguyen.sample.model.CloudImage;
 import com.example.duynguyen.sample.model.Evaluation;
 import com.example.duynguyen.sample.model.Parent;
 import com.example.duynguyen.sample.model.Student;
@@ -119,7 +120,14 @@ public class AccountFragment extends Fragment {
         String studentName = mStudent.getFirstName() + " " + mStudent.getLastName();
         nameTv.setText(studentName);
         ptsTv.setText("1000 points");
-        Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/my-student-152dc.appspot.com/o/rewardItems%2F1.png?alt=media&token=9a55a700-147c-4f7f-a756-20a890e54037").into(studentIv);
+        List<CloudImage> profilePics = mStudent.getProfilePics();
+        //set Default profile Image
+        for (CloudImage defaultProfilePic:profilePics){
+            if (defaultProfilePic.getEnable()){
+                Picasso.get().load(defaultProfilePic.getUrl()).into(studentIv);
+            }
+        }
+
         //populate Iv later
         HashMap<String, Evaluation> evaluationHashMap = mStudent.getEvaluations();
         if (evaluationHashMap != null) {

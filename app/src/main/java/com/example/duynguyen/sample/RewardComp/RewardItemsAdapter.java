@@ -112,7 +112,7 @@ public class RewardItemsAdapter extends RecyclerView.Adapter<RewardItemsAdapter.
                     for (CloudImage profilePic: mProfilePics){
                         profilePic.setEnable(false);
                     }
-                    CloudImage newProfilePic = rewardItem;
+                    CloudImage newProfilePic = new CloudImage(rewardItem);
                     newProfilePic.setEnable(true);
                     mProfilePics.add(newProfilePic);
                     mStudent.setProfilePics(mProfilePics);
