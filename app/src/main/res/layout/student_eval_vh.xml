@@ -2,6 +2,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_marginTop="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -11,8 +12,8 @@
 
         <ImageView
             android:id="@+id/behavior_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:srcCompat="@mipmap/baseline_account_circle_black_48dp" />
 
         <LinearLayout
@@ -22,15 +23,24 @@
 
             <TextView
                 android:id="@+id/behavior_tv"
+                android:textStyle="bold"
+                android:layout_margin="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="behaviorEval" />
 
             <TextView
                 android:id="@+id/comment_tv"
+                android:layout_margin="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="comment" />
+                android:text="commenasdhjfhjahdjahsdjhasjdhjhwajdhjashdjhwjhdhasdjhjdwdt" />
+            <TextView
+                android:id="@+id/date_tv"
+                android:layout_gravity="end|bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10/19/2018"/>
 
         </LinearLayout>
 

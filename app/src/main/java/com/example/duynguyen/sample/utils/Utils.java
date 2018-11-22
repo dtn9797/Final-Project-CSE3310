@@ -37,6 +37,12 @@ public class Utils {
     public static final String CURRENT_USER_KEY= "current_user";
     public static final String CLASS_ROOM_KEY= "classroom_user";
 
+    //Behavior Type
+    public static final String EXCELLENT_BEHAV= "Excellent";
+    public static final String GOOD_BEHAV= "Good";
+    public static final String FAIR_BEHAV= "Fair";
+    public static final String NI_BEHAV= "Needs Improvement";
+
 
 
 
