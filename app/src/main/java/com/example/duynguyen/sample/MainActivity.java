@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mCurrentUserId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
-        setUpView(savedInstanceState);
         storeInfoLocally();
+        setUpView(savedInstanceState);
+
 
 
 

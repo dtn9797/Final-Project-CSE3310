@@ -67,8 +67,14 @@ public class AccountFragment extends Fragment {
         evalRv.setAdapter(mAEAdapter);
         //setup firebase
         mRef = FirebaseDatabase.getInstance().getReference();
-        loadStudentData();
+
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadStudentData();
     }
 
     private void loadStudentData() {

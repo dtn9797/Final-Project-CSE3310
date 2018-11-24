@@ -74,9 +74,15 @@ public class RewardsFragment extends Fragment {
         addPointsRv.setAdapter(mARPAdapter);
         addPointsRv.setLayoutManager(linearLayoutManager);
 
-        setUpview();
+
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setUpview();
     }
 
     private void setUpview() {
