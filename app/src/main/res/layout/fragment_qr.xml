@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:gravity="center"
+        android:textStyle="bold"
         android:text="Show QR code to parent/student for signing up."/>
     <ImageView
         android:id="@+id/qr_iv"

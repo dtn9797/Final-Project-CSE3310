@@ -3,25 +3,37 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@android:color/white">
 
+    <TextView
+        android:id="@+id/reward_info_tv"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text=""/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/reward_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/add_reward_pts_rv"
+        android:layout_alignParentStart="true" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/add_reward_pts_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="38dp" />
 
     <Button
         android:id="@+id/send_pts_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/add_reward_pts_rv"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="243dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginBottom="220dp"
-        android:background="@color/colorAccent"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="31dp"
         android:text="Send Reward Points" />
 
 

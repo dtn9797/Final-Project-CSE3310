@@ -53,6 +53,9 @@ public class CloudImage {
             case 6:
                 generateReward6();
                 break;
+            case 7:
+                generateDefaultProfile();
+                break;
         }
     }
 

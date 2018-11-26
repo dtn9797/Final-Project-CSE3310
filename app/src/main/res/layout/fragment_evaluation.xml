@@ -4,9 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
     <TextView
+        android:id="@+id/info_tv"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="For each student , check one status alomng.."/>
+        android:textStyle="bold"
+        android:text="Evaluate each student by rating each student's behavior and adding commment(optional)"/>
    <android.support.v7.widget.RecyclerView
        android:id="@+id/evaluation_rv"
        android:layout_width="match_parent"

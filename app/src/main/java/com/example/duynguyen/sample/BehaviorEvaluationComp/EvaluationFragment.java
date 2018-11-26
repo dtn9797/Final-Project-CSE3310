@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.duynguyen.sample.R;
@@ -56,6 +57,8 @@ public class EvaluationFragment extends Fragment {
     RecyclerView evalRv;
     @BindView(R.id.eval_submit_btn)
     Button evalSubmitBtn;
+    @BindView(R.id.info_tv)
+    TextView infoTv;
 
     @Nullable
     @Override
@@ -99,6 +102,10 @@ public class EvaluationFragment extends Fragment {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                     String studentId = snapshot.getValue(String.class);
                     studentIds.add(studentId);
+                }
+                if(studentIds.size()==0) {
+                    evalSubmitBtn.setVisibility(View.GONE);
+                    infoTv.setText("No student to show");
                 }
                 for (String studentId: studentIds){
                     DatabaseReference studentRef = mRef.child(Utils.USERS_CHILD).child(studentId);

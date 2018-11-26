@@ -1,22 +1,44 @@
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_margin="20dp">
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryLight"
+    android:layout_margin="10dp"
+    >
 
-    <TextView
-        android:id="@+id/student_name_tv"
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:text="Student 0"/>
+        android:layout_margin="15dp">
 
-    <Spinner
-        android:id="@+id/eval_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/student_name_tv"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:text="Student sadjakfjaksdakjsd0"
+            android:textSize="16dp" />
+
+        <Spinner
+            android:id="@+id/eval_spinner"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp" />
+
+
+    </RelativeLayout>
+
     <EditText
         android:id="@+id/eval_et"
-        android:layout_width="100dp"
-        android:layout_height="50dp" />
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="30dp"
+        android:hint="Comment(Optional)" />
 </LinearLayout>

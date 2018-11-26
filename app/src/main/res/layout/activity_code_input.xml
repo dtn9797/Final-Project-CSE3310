@@ -25,7 +25,7 @@
         android:id="@+id/enter_code_et"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:text="myStudent123451"
+        android:text="myStudent12345"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:autofillHints="myStudent12345"

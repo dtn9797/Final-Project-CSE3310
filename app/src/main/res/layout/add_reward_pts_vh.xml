@@ -1,21 +1,29 @@
 <RelativeLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
+    android:layout_height="50dp"
+    android:layout_margin="20dp"
+    android:background="@color/colorPrimaryLight"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <TextView
-            android:id="@+id/student_na_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Student Name"/>
+    <TextView
+        android:id="@+id/student_na_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="Student Name" />
 
-        <Spinner
-            android:id="@+id/pts_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="end"
-            android:layout_marginEnd="34dp" />
+    <Spinner
+        android:id="@+id/pts_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/student_na_tv"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_marginEnd="56dp" />
     </RelativeLayout>
 

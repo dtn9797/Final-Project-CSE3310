@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.duynguyen.sample.R;
@@ -49,6 +50,8 @@ public class RewardsFragment extends Fragment {
     RecyclerView addPointsRv;
     @BindView(R.id.send_pts_btn)
     Button sendPtsBtn;
+    @BindView(R.id.reward_info_tv)
+    TextView infoTv;
 
     private User mCurrentUser;
     private RewardItemsAdapter mRIAdapter;
@@ -87,12 +90,13 @@ public class RewardsFragment extends Fragment {
         String userType = mCurrentUser.getUserType();
         if (userType.equals(Utils.STUDENT)) {
             sendPtsBtn.setVisibility(View.GONE);
-
             mRef.child(Utils.USERS_CHILD).child(mCurrentUser.getfUserId()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Student student = dataSnapshot.getValue(Student.class);
                     assert student != null;
+                    String currentPts = String.valueOf(student.getRewardPts());
+                    infoTv.setText("Current Points: "+currentPts);
                     List<CloudImage> rewardItems = student.getRewardPics();
                     mRIAdapter.setmRewardItems(rewardItems,student);
                 }
@@ -148,6 +152,14 @@ public class RewardsFragment extends Fragment {
                     String studentId = snapshot.getValue(String.class);
                     studentIds.add(studentId);
                 }
+                if (studentIds.size() ==0 && mCurrentUser.getUserType().equals(Utils.TEACHER)){
+                    sendPtsBtn.setVisibility(View.GONE);
+                    infoTv.setText("No Data to Show");
+                }else if (studentIds.size() !=0 && mCurrentUser.getUserType().equals(Utils.TEACHER)){
+                    infoTv.setText("Reward points to students");
+                    sendPtsBtn.setVisibility(View.VISIBLE);
+                }
+
                 for (String studentId: studentIds){
                     DatabaseReference studentRef = mRef.child(Utils.USERS_CHILD).child(studentId);
                     studentRef.addListenerForSingleValueEvent(new ValueEventListener() {

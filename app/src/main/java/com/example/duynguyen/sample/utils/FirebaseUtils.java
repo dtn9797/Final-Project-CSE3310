@@ -50,7 +50,7 @@ public class FirebaseUtils {
         }
         student.setRewardPics(rewardItems);
         List<CloudImage> profilePics = new ArrayList<>();
-        profilePics.add(new CloudImage(1));
+        profilePics.add(new CloudImage(7));
         student.setProfilePics(profilePics);
         //add student id in users
         database.child(Utils.USERS_CHILD).child(student.getfUserId()).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {

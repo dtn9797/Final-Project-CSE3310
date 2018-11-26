@@ -59,7 +59,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="16sp"
-            android:text="paradise"/>
+            android:text="qwertyuiop"/>
 
         <LinearLayout
             android:layout_width="fill_parent"

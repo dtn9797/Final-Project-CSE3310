@@ -66,8 +66,7 @@
         android:singleLine="true"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:textSize="16sp"
-        android:text="Teacher"/>
+        android:textSize="16sp" />
 
     <View
         android:layout_width="fill_parent"
@@ -86,7 +85,6 @@
         android:inputType="text"
         android:padding="10dp"
         android:singleLine="true"
-        android:text="lastname"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="16sp" />
@@ -162,7 +160,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="16sp"
-        android:text="paradise"/>
+        android:text="qwertyuiop"/>
 
     <View
         android:layout_width="fill_parent"
@@ -185,7 +183,7 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="16sp"
-        android:text="paradise"/>
+        android:text="qwertyuio"/>
 
     <Button
         android:id="@+id/next_btn"
