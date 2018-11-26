@@ -21,6 +21,11 @@
             android:icon="@mipmap/baseline_class_black_18dp"
             android:title="Behavior evaluation" />
 
+        <item android:id="@+id/nav_qr"
+            android:icon="@drawable/qr_code"
+            android:title="QR Code" />
+
+
         <item android:id="@+id/nav_settings"
             android:icon="@mipmap/baseline_settings_black_18dp"
             android:title="Settings" />

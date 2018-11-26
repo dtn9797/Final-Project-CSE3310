@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     MenuItem chatNav;
     MenuItem rewardNav;
     MenuItem evalNav;
+    MenuItem qrNav;
     ImageView menuPic;
 
     @Override
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         chatNav = menu.findItem(R.id.nav_chat);
         rewardNav = menu.findItem(R.id.nav_rewards);
         evalNav = menu.findItem(R.id.nav_evaluation);
+        qrNav = menu.findItem(R.id.nav_qr);
         menuPic = navigationView.getHeaderView(0).findViewById(R.id.menu_pic_iv);
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -161,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     getSupportActionBar().setTitle("Student's Profile");
                     rewardNav.setVisible(false);
                     evalNav.setVisible(false);
+                    qrNav.setVisible(false);
                     menuPic.setImageResource(R.drawable.parent);
                     break;
             }
@@ -200,6 +203,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportActionBar().setTitle("Rewards");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new RewardsFragment()).commit();
+                break;
+
+            case R.id.nav_qr:
+                getSupportActionBar().setTitle("QR Code");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new QRCodeFragment()).commit();
                 break;
 
             case R.id.nav_settings:
