@@ -1,12 +1,16 @@
 package com.example.duynguyen.sample.utils;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.duynguyen.sample.LoginComp.SignUpActivity;
+import com.example.duynguyen.sample.MainActivity;
 import com.example.duynguyen.sample.model.ClassRoom;
 import com.example.duynguyen.sample.model.CloudImage;
 import com.example.duynguyen.sample.model.Parent;
@@ -172,7 +176,7 @@ public class FirebaseUtils {
         messagesRef.child(classId).child(Utils.ANNOUNCEMENT_CHILD).child("id").setValue(Utils.ANNOUNCEMENT_CHILD);
     }
 
-    public static void signIn (String email, String password, final String classId, final String studentId, final User user, final Context context){
+    public static void signIn (String email, String password, final String classId, final String studentId, final ClassRoom classRoom, final User user, final Context context){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -181,15 +185,26 @@ public class FirebaseUtils {
                         if(task.isSuccessful()){
                             //User registered successfully
                             Toast.makeText(context, "Signed up successfully",Toast.LENGTH_SHORT).show();
-                            if(user.getUserType().equals(Utils.STUDENT)){
-                                addStudentUserToDatabase(context, user,classId);
-                            }else if (user.getUserType().equals(Utils.PARENT)){
-                                addParentUserToDatabase(context, user,classId,studentId);
-                            }else {
-                                addTeacherToDatabase(context,user,classId);
+
+                            switch (user.getUserType()){
+                                case Utils.STUDENT:
+                                    addStudentUserToDatabase(context, user,classId);
+                                    break;
+                                case Utils.PARENT:
+                                    addParentUserToDatabase(context, user,classId,studentId);
+                                    break;
+                                case Utils.TEACHER:
+                                    addClass(classRoom);
+                                    addTeacherToDatabase(context,user,classId);
+                                    break;
                             }
+                            Intent intent = new Intent(context,MainActivity.class);
+                            context.startActivity(intent);
                         }else{
                             //need to go back to the signup screen
+                            Toast.makeText(context,"Duplicated User Id. Use a different username",Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(context,SignUpActivity.class);
+                            context.startActivity(intent);
                             Log.i("Response","Failed to create user:"+task.getException().getMessage());
                         }
                     }

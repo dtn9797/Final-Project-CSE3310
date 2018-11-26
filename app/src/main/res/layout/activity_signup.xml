@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
     android:id="@+id/signUp_ll"
@@ -46,6 +46,11 @@
             android:textColor="@color/white"
             android:text="@string/student" />
     </RadioGroup>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
+
     <EditText
         android:id="@+id/first_name_edt"
         android:layout_width="fill_parent"
@@ -75,7 +80,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
-
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="@string/lastName"
@@ -86,6 +90,10 @@
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textSize="16sp" />
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/white_greyish" />
 
     <EditText
         android:id="@+id/userEmailId"
@@ -183,7 +191,7 @@
         android:id="@+id/next_btn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="45dp"
         android:background="@drawable/loginbutton_selector"
         android:padding="3dp"
         android:text="@string/next"

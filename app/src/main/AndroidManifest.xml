@@ -28,10 +28,19 @@
         </activity>
         <activity android:name=".LoginComp.ScannerActivity"
             android:parentActivityName=".LoginComp.CodeInputActivity"/>
-        <activity android:name=".LoginComp.CodeInputActivity"/>
-        <activity android:name=".LoginComp.SignUpActivity"/>
-        <activity android:name=".LoginComp.CreateClassActivity"/>
-        <activity android:name=".LoginComp.ForgotPassActivity"/>
+        <activity android:name=".LoginComp.CodeInputActivity"
+            android:label="Code Input"
+            android:parentActivityName=".LoginComp.SignUpActivity"/>
+        <activity android:name=".LoginComp.SignUpActivity"
+            android:label="Sign Up "
+            android:parentActivityName=".LoginComp.LoginActivity"
+            />
+        <activity android:name=".LoginComp.CreateClassActivity"
+            android:parentActivityName=".LoginComp.SignUpActivity"
+            android:label="Create CLass"/>
+        <activity android:name=".LoginComp.ForgotPassActivity"
+            android:label="Forgot Password"
+            android:parentActivityName=".LoginComp.LoginActivity"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".ChatComp.ChatActivity"
             android:parentActivityName=".MainActivity"/>

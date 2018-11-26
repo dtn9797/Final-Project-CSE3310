@@ -80,7 +80,7 @@ public class CreateClassActivity extends AppCompatActivity {
                 else {
                     ClassRoom classRoom = new ClassRoom(className,mClassId);
                     FirebaseUtils.addClass(classRoom);
-                    FirebaseUtils.signIn(mUser.getLoginId(),mUser.getPass(),mClassId,"",mUser,getBaseContext());
+                    FirebaseUtils.signIn(mUser.getLoginId(),mUser.getPass(),mClassId,"",classRoom,mUser,getBaseContext());
                 }
 
             }

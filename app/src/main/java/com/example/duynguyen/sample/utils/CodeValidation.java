@@ -39,7 +39,7 @@ public class CodeValidation {
                         String email = user.getLoginId().concat("@myStudent.com");
                         String password = user.getPass();
                         user.setClassId(classId);
-                        FirebaseUtils.signIn(email,password,classId,"",user,context);
+                        FirebaseUtils.signIn(email,password,classId,"",null,user,context);
                     }
                     else {
                         Toast.makeText(context, "Error!!! Id is not existed.",Toast.LENGTH_SHORT).show();
@@ -77,7 +77,7 @@ public class CodeValidation {
                         Toast.makeText(context, "Data exits",Toast.LENGTH_SHORT).show();
                         String email = user.getLoginId();
                         String pass = user.getPass();
-                        FirebaseUtils.signIn(email,pass,classId,studentId,user,context);
+                        FirebaseUtils.signIn(email,pass,classId,studentId,null,user,context);
 
                     }
                     else {

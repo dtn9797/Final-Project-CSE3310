@@ -90,8 +90,6 @@ public class ForgotPassActivity extends AppCompatActivity implements View.OnClic
 
             // Else submit email id and fetch passwod or do your stuff
         else{
-            Toast.makeText(getBaseContext(), "Get Forgot Password.",
-                    Toast.LENGTH_SHORT).show();
             mAuth.sendPasswordResetEmail(getEmailId).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

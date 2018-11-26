@@ -168,8 +168,7 @@ public class SignUpActivity  extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.already_user:
-
-                // Replace login fragment
+                finish();
 
                 break;
             case R.id.parentRadioBtn:
