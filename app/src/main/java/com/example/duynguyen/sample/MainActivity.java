@@ -8,7 +8,10 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.duynguyen.sample.BehaviorEvaluationComp.EvaluationFragment;
 import com.example.duynguyen.sample.ChatComp.ChatMenuFragment;
@@ -37,6 +40,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     String mClassId;
     User mUser;
 
+    MenuItem accountNav;
+    MenuItem chatNav;
+    MenuItem rewardNav;
+    MenuItem evalNav;
+    ImageView menuPic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,16 +55,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mCurrentUserId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
-        storeInfoLocally();
-        setUpView(savedInstanceState);
-
-
-
+        storeInfoLocally(savedInstanceState);
 
     }
 
 
-    private void storeInfoLocally() {
+    private void storeInfoLocally(final Bundle saveInstanceState) {
         final SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
         final SharedPreferences.Editor prefsEditor = mPrefs.edit();
         final Gson gson = new Gson();
@@ -64,15 +69,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUser = dataSnapshot.getValue(User.class);
+                setUpView(saveInstanceState);
                 String json = gson.toJson(mUser);
                 prefsEditor.putString(Utils.CURRENT_USER_KEY, json);
                 prefsEditor.apply();
 
                 mClassId = mUser.getClassId();
                 //subscribe to announcement topic
-                if(mUser.getUserType().equals(Utils.PARENT)) {
+                if (mUser.getUserType().equals(Utils.PARENT)) {
                     FirebaseMessaging.getInstance().subscribeToTopic(Utils.ANNOUNCEMENT_CHILD + mClassId);
-                    FirebaseMessaging.getInstance().subscribeToTopic(Utils.EVALUATION_CHILD+ mClassId);
+                    FirebaseMessaging.getInstance().subscribeToTopic(Utils.EVALUATION_CHILD + mClassId);
                 }
 
                 DatabaseReference classRef = FirebaseDatabase.getInstance().getReference().child(Utils.CLASSES_CHILD).
@@ -101,10 +107,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    @Override
+    public void invalidateOptionsMenu() {
+        super.invalidateOptionsMenu();
+    }
+
     private void setUpView(Bundle savedInstanceState) {
+
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        accountNav = menu.findItem(R.id.nav_account);
+        chatNav = menu.findItem(R.id.nav_chat);
+        rewardNav = menu.findItem(R.id.nav_rewards);
+        evalNav = menu.findItem(R.id.nav_evaluation);
+        menuPic = navigationView.getHeaderView(0).findViewById(R.id.menu_pic_iv);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
@@ -113,11 +133,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
+        //show menu depend on user
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new AccountFragment()).commit();
+            String userType = mUser.getUserType();
+            switch (userType) {
+                case Utils.STUDENT:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new AccountFragment()).commit();
+                    navigationView.setCheckedItem(R.id.nav_account);
+                    getSupportActionBar().setTitle("Student's Profile");
+                    chatNav.setVisible(false);
+                    evalNav.setVisible(false);
+                    menuPic.setImageResource(R.drawable.student);
+                    break;
+                case Utils.TEACHER:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new EvaluationFragment()).commit();
+                    navigationView.setCheckedItem(R.id.nav_evaluation);
+                    getSupportActionBar().setTitle("Behavior Evaluation");
+                    accountNav.setVisible(false);
+                    menuPic.setImageResource(R.drawable.teacher);
+                    break;
+                case Utils.PARENT:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new AccountFragment()).commit();
+                    navigationView.setCheckedItem(R.id.nav_account);
+                    getSupportActionBar().setTitle("Student's Profile");
+                    rewardNav.setVisible(false);
+                    evalNav.setVisible(false);
+                    menuPic.setImageResource(R.drawable.parent);
+                    break;
+            }
 
-            navigationView.setCheckedItem(R.id.nav_account);
+
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -128,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_account:
                 //getActionBar().setTitle("Account settings");
-                getSupportActionBar().setTitle("Account Settings");
+                getSupportActionBar().setTitle("Student's Profile");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new AccountFragment()).commit();
                 break;
@@ -142,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_evaluation:
                 //getActionBar().setTitle("Behavior evaluation");
-                getSupportActionBar().setTitle("Behavior evaluation");
+                getSupportActionBar().setTitle("Behavior Evaluation");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new EvaluationFragment()).commit();
                 break;
@@ -163,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_logout:
                 //Unsubscribe to topic
-                if(mUser.getUserType().equals(Utils.PARENT)) {
+                if (mUser.getUserType().equals(Utils.PARENT)) {
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(Utils.ANNOUNCEMENT_CHILD + mClassId);
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(Utils.EVALUATION_CHILD + mClassId);
                 }

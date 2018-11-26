@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:scaleType="center"
         app:srcCompat="@mipmap/baseline_account_circle_black_48dp" />
 
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
+        android:layout_marginBottom="5dp"
         android:text="studentName" />
 
     <TextView
@@ -27,9 +29,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
+        android:layout_marginTop="5dp"
         android:text="points" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/eval_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="25dp" />
 </LinearLayout>

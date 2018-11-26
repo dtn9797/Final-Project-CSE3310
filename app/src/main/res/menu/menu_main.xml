@@ -7,7 +7,7 @@
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_account"
             android:icon="@mipmap/baseline_person_black_18dp"
-            android:title="My Account" />
+            android:title="Student's Profile" />
 
         <item android:id="@+id/nav_chat"
             android:icon="@mipmap/baseline_message_black_18dp"
