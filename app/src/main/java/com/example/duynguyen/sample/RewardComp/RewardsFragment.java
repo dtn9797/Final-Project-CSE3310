@@ -23,6 +23,7 @@ import com.example.duynguyen.sample.model.Student;
 import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.FirebaseUtils;
 import com.example.duynguyen.sample.utils.Utils;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -74,19 +75,15 @@ public class RewardsFragment extends Fragment {
         addPointsRv.setAdapter(mARPAdapter);
         addPointsRv.setLayoutManager(linearLayoutManager);
 
+        getCurrentUser();
+
 
 
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        setUpview();
-    }
 
     private void setUpview() {
-        mCurrentUser = getCurrentUserInfo();
         String userType = mCurrentUser.getUserType();
         if (userType.equals(Utils.STUDENT)) {
             sendPtsBtn.setVisibility(View.GONE);
@@ -136,16 +133,10 @@ public class RewardsFragment extends Fragment {
     }
 
 
-    private User getCurrentUserInfo() {
-        final SharedPreferences mPrefs = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = mPrefs.getString(Utils.CURRENT_USER_KEY, "");
-        return gson.fromJson(json, User.class);
-    }
+
 
     private void getStudentsData() {
         //get from current user
-        mCurrentUser = getCurrentUserInfo();
         String classId = mCurrentUser.getClassId();
         DatabaseReference studentsRef = mRef.child(Utils.CLASSES_CHILD).child(classId).child(Utils.STUDENTS_CHILD);
         studentsRef.addValueEventListener(new ValueEventListener() {
@@ -183,5 +174,21 @@ public class RewardsFragment extends Fragment {
             }
         });
 
+    }
+
+    public void getCurrentUser () {
+        String currentUserId = FirebaseAuth.getInstance().getUid();
+        mRef.child(Utils.USERS_CHILD).child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mCurrentUser = dataSnapshot.getValue(User.class);
+                setUpview();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

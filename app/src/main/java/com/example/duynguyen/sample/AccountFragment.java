@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.duynguyen.sample.model.ClassRoom;
 import com.example.duynguyen.sample.model.CloudImage;
 import com.example.duynguyen.sample.model.Evaluation;
 import com.example.duynguyen.sample.model.Parent;
@@ -20,11 +21,13 @@ import com.example.duynguyen.sample.model.Student;
 import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.AccountEvalAdapter;
 import com.example.duynguyen.sample.utils.Utils;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -52,7 +55,8 @@ public class AccountFragment extends Fragment {
     private Student mStudent;
     private DatabaseReference mRef;
     private AccountEvalAdapter mAEAdapter;
-
+    private User mUser;
+    private String mCurrentUserId;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,17 +71,12 @@ public class AccountFragment extends Fragment {
         evalRv.setAdapter(mAEAdapter);
         //setup firebase
         mRef = FirebaseDatabase.getInstance().getReference();
-
+        mCurrentUserId = FirebaseAuth.getInstance().getUid();
+        getCurrentUser();
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        loadStudentData();
-    }
-
-    private void loadStudentData() {
+    private void checkUserType() {
         User currentUser = getCurrentUserInfo();
         if (currentUser.getUserType().equals(Utils.PARENT)) {
             mRef.child(Utils.USERS_CHILD).child(currentUser.getfUserId()).addValueEventListener(new ValueEventListener() {
@@ -150,5 +149,20 @@ public class AccountFragment extends Fragment {
         Gson gson = new Gson();
         String json = mPrefs.getString(Utils.CURRENT_USER_KEY, "");
         return gson.fromJson(json, User.class);
+    }
+
+    public void getCurrentUser () {
+        mRef.child(Utils.USERS_CHILD).child(mCurrentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mUser = dataSnapshot.getValue(User.class);
+                checkUserType();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -21,6 +21,7 @@ import com.example.duynguyen.sample.model.User;
 import com.example.duynguyen.sample.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,7 +65,7 @@ public class EvaluationFragment extends Fragment {
 
         setUpView();
         mRef = FirebaseDatabase.getInstance().getReference();
-        getStudentsData();
+        getCurrentUser();
 
 
         return view;
@@ -88,7 +89,6 @@ public class EvaluationFragment extends Fragment {
 
     private void getStudentsData() {
         //get from current user
-        mCurrentUser = getCurrentUserInfo();
         String classId = mCurrentUser.getClassId();
         DatabaseReference studentsRef = mRef.child(Utils.CLASSES_CHILD).child(classId).child(Utils.STUDENTS_CHILD);
         studentsRef.addValueEventListener(new ValueEventListener() {
@@ -164,10 +164,21 @@ public class EvaluationFragment extends Fragment {
         mRef.child(Utils.NOTIFICATIONS_CHILD).child(mCurrentUser.getClassId()).child(evaluationNotChild).push().setValue("");
 
     }
-    private User getCurrentUserInfo() {
-        final SharedPreferences mPrefs = Objects.requireNonNull(getActivity()).getPreferences(MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = mPrefs.getString(Utils.CURRENT_USER_KEY, "");
-        return gson.fromJson(json, User.class);
+
+
+    public void getCurrentUser () {
+        String currentUserId = FirebaseAuth.getInstance().getUid();
+        mRef.child(Utils.USERS_CHILD).child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mCurrentUser = dataSnapshot.getValue(User.class);
+                getStudentsData();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

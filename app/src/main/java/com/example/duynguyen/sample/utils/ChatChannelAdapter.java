@@ -25,17 +25,17 @@ public class ChatChannelAdapter extends RecyclerView.Adapter<ChatChannelAdapter.
     protected static ItemListener mItemListener;
 
 
-    public ChatChannelAdapter(User mCurrentUser, ArrayList<MessageChannel> mData, ItemListener itemListener) {
-        this.mData = mData;
-        this.mCurrentUser = mCurrentUser;
-        this.mItemListener = itemListener;
+
+    public ChatChannelAdapter(ItemListener itemListener) {
+        mItemListener = itemListener;
     }
 
     public interface ItemListener {
         void onChannelClick(String key, int profileImageRes, String receiverName,String channelInfo);
     }
-    public void setmData(ArrayList<MessageChannel> data ){
+    public void setmData(User mCurrentUser,ArrayList<MessageChannel> data ){
         mData = data;
+        this.mCurrentUser = mCurrentUser;
         notifyDataSetChanged();
     }
 
